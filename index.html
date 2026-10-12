@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,650&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Lonely Planet Top 500 · 世界旅行目的地清单</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f7f9f8;
+      --panel:#ffffff;
+      --panel-2:#edf3f1;
+      --ink:#15211e;
+      --muted:#61706c;
+      --line:#d8e1de;
+      --accent:#e55e35;
+      --accent-soft:#fff0e9;
+      --teal:#0c7464;
+      --teal-soft:#e0f3ee;
+      --amber:#a66408;
+      --amber-soft:#fff3d8;
+      --blue:#28659a;
+      --blue-soft:#e5f1fb;
+      --shadow:0 18px 60px rgba(21,33,30,.10);
+      --focus:#186f61;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{
+        --bg:#0b1110;
+        --panel:#121b19;
+        --panel-2:#182320;
+        --ink:#eef6f3;
+        --muted:#a7b5b1;
+        --line:#2b3935;
+        --accent:#ff7a51;
+        --accent-soft:#3b2119;
+        --teal:#62c9b5;
+        --teal-soft:#173b34;
+        --amber:#f0b65c;
+        --amber-soft:#3a2b14;
+        --blue:#76b7ec;
+        --blue-soft:#17334a;
+        --shadow:0 22px 70px rgba(0,0,0,.32);
+        --focus:#7ed6c5;
+      }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC",sans-serif;line-height:1.55}
+    button,input,select{font:inherit}
+    a{color:inherit}
+    :focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+    .wrap{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+    .intro{padding:68px 0 30px}
+    .intro-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:56px;align-items:end}
+    .edition{margin:0 0 16px;color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.08em}
+    h1{font-family:"Newsreader","Noto Sans SC",serif;font-size:clamp(45px,7.1vw,86px);font-weight:650;line-height:.94;letter-spacing:-.045em;margin:0;max-width:820px}
+    .lede{margin:23px 0 0;font-size:18px;color:var(--muted);max-width:660px}
+    .intro-note{border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:13px}
+    .intro-note b{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}
+    .intro-note time{color:var(--accent);font-weight:700}
+
+    .gallery{display:grid;grid-template-columns:1.55fr .76fr .76fr;grid-template-rows:250px 250px;gap:12px;margin-top:24px}
+    .feature{position:relative;overflow:hidden;background:var(--panel-2);min-height:0}
+    .feature:first-child{grid-row:1/3}
+    .feature img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+    .feature:hover img{transform:scale(1.025)}
+    .feature::after{content:"";position:absolute;inset:34% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.78))}
+    .feature-copy{position:absolute;z-index:2;left:18px;right:18px;bottom:15px;color:#fff}
+    .feature-copy .rank{font:650 13px/1 "Noto Sans SC",sans-serif;color:#ffd1bf}
+    .feature-copy h2{font-family:"Newsreader","Noto Sans SC",serif;font-size:clamp(21px,2.5vw,35px);line-height:1.08;margin:5px 0 2px;letter-spacing:-.02em}
+    .feature-copy p{font-size:12px;margin:0;color:rgba(255,255,255,.8)}
+    .feature-source{position:absolute;z-index:3;top:11px;right:11px;background:rgba(0,0,0,.58);color:#fff;text-decoration:none;font-size:11px;padding:5px 8px;border-radius:999px}
+    .gallery-more{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:10px}
+    .mini-feature{position:relative;min-height:145px;overflow:hidden;background:var(--panel-2)}
+    .mini-feature img{width:100%;height:100%;object-fit:cover;display:block}
+    .mini-feature::after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.78))}
+    .mini-feature span{position:absolute;z-index:2;left:11px;bottom:9px;color:#fff;font-weight:700;font-size:13px;text-shadow:0 1px 6px #000}
+
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--panel);margin-top:26px}
+    .stat{padding:21px 24px;border-right:1px solid var(--line)}
+    .stat:last-child{border-right:0}
+    .stat strong{font-family:"Newsreader","Noto Sans SC",serif;font-size:38px;line-height:1;color:var(--ink)}
+    .stat span{display:block;margin-top:7px;color:var(--muted);font-size:12px}
+
+    .explorer{margin-top:58px;padding-bottom:78px}
+    .explorer-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:17px}
+    .explorer-head h2{font-family:"Newsreader","Noto Sans SC",serif;font-size:clamp(34px,5vw,54px);letter-spacing:-.035em;line-height:1;margin:0}
+    .explorer-head p{margin:0;color:var(--muted);font-size:13px;text-align:right}
+    .controls{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 93%,transparent);backdrop-filter:blur(14px);border-block:1px solid var(--line);padding:13px 0}
+    .control-row{display:grid;grid-template-columns:minmax(240px,1.45fr) minmax(180px,.7fr) minmax(150px,.55fr);gap:10px;align-items:center}
+    .field{position:relative}
+    .field svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+    input[type="search"],select{width:100%;height:46px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:0 13px}
+    input[type="search"]{padding-left:43px}
+    select{cursor:pointer}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .chip{appearance:none;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer}
+    .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    .results-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 2px 12px}
+    .results-bar strong{font-size:15px}
+    .results-bar span{font-size:12px;color:var(--muted)}
+    .reset{border:0;background:none;color:var(--accent);font-weight:700;padding:6px;cursor:pointer}
+
+    .destination-table{border:1px solid var(--line);background:var(--panel)}
+    .table-head,.destination-row{display:grid;grid-template-columns:64px minmax(280px,1.35fr) minmax(230px,1.15fr) minmax(150px,.7fr) minmax(120px,.55fr) minmax(190px,.9fr);align-items:center}
+    .table-head{min-height:46px;background:var(--panel-2);color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.04em}
+    .table-head>div,.destination-row>div{padding:11px 16px}
+    .destination-row{min-height:126px;border-top:1px solid var(--line)}
+    .destination-row:hover{background:color-mix(in srgb,var(--panel-2) 55%,transparent)}
+    .rank-cell{font-family:"Newsreader",serif;font-size:25px;color:var(--accent);font-weight:650}
+    .destination-media{display:grid;grid-template-columns:160px minmax(0,1fr);gap:16px;align-items:center}
+    .image-button{position:relative;width:160px;height:102px;padding:0;border:0;background:var(--panel-2);overflow:hidden;cursor:zoom-in}
+    .image-button::after{content:"放大";position:absolute;right:7px;bottom:7px;padding:4px 7px;border-radius:999px;background:rgba(8,15,13,.7);color:#fff;font-size:10px;font-weight:700;line-height:1;opacity:0;transform:translateY(3px);transition:opacity .18s ease,transform .18s ease}
+    .image-button:hover::after,.image-button:focus-visible::after{opacity:1;transform:none}
+    .destination-image{display:block;width:100%;height:100%;object-fit:cover;background:var(--panel-2);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+    .image-button:hover .destination-image{transform:scale(1.03)}
+    .image-fallback{display:none;width:160px;height:102px;align-items:center;justify-content:center;background:var(--panel-2);color:var(--muted);font-size:10px;text-align:center;padding:8px}
+    .destination-media.image-unavailable .image-fallback{display:flex}
+    body.modal-open{overflow:hidden}
+    .lightbox{position:fixed;inset:0;z-index:1000;display:none;place-items:center;padding:24px;background:rgba(4,8,7,.92)}
+    .lightbox[aria-hidden="false"]{display:grid}
+    .lightbox-figure{margin:0;max-width:min(1240px,100%);max-height:calc(100vh - 48px);display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,350px);gap:30px;align-items:center}
+    .lightbox-image{display:block;max-width:100%;max-height:calc(100vh - 48px);width:auto;height:auto;margin:auto;object-fit:contain;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+    .lightbox-caption{color:#fff;text-align:left;font-size:14px;line-height:1.6}
+    .lightbox-rank{display:block;color:#ff9a79;font-size:12px;font-weight:700;letter-spacing:.08em;margin-bottom:10px}
+    .lightbox-name{font-family:"Newsreader","Noto Sans SC",serif;font-size:clamp(28px,4vw,44px);line-height:1.05;margin:0 0 7px}
+    .lightbox-en{color:rgba(255,255,255,.66);font-size:13px;margin:0 0 22px}
+    .lightbox-place{color:rgba(255,255,255,.8);font-size:12px;margin:0 0 22px}
+    .lightbox-reason{margin:0;padding-top:18px;border-top:1px solid rgba(255,255,255,.22);font-size:16px;line-height:1.75}
+    .lightbox-reason b{display:block;color:#ffb098;font-size:11px;letter-spacing:.08em;margin-bottom:6px}
+    .lightbox-close,.lightbox-nav{position:fixed;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.42);color:#fff;line-height:1;cursor:pointer}
+    .lightbox-close{top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));width:44px;height:44px;font-size:28px}
+    .lightbox-nav{top:50%;width:48px;height:48px;margin-top:-24px;font-size:31px}
+    .lightbox-prev{left:max(16px,env(safe-area-inset-left))}
+    .lightbox-next{right:max(16px,env(safe-area-inset-right))}
+    .lightbox-nav:disabled{display:none}
+    .name-cn{font-weight:700;font-size:15px}
+    .name-en{color:var(--muted);font-size:11px;margin-top:2px;line-height:1.35}
+    .reason-cell{font-size:12px;line-height:1.65;color:var(--ink)}
+    .reason-cell::before{content:"入选理由";display:block;margin-bottom:5px;color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.06em}
+    .place,.country{font-size:13px}
+    .visa-badge{display:inline-flex;align-items:center;gap:6px;border-radius:5px;padding:6px 8px;font-size:11px;font-weight:700;line-height:1.35}
+    .visa-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:0 0 auto}
+    .visa-free{color:var(--teal);background:var(--teal-soft)}
+    .visa-arrival{color:var(--blue);background:var(--blue-soft)}
+    .visa-evisa{color:#7458b5;background:#eee9fa}
+    .visa-before{color:var(--amber);background:var(--amber-soft)}
+    .visa-other{color:var(--muted);background:var(--panel-2)}
+    @media(prefers-color-scheme:dark){.visa-evisa{color:#c0a9ff;background:#2b2342}}
+    .empty{padding:70px 22px;text-align:center;color:var(--muted)}
+
+    .notes{padding:36px 0 58px;border-top:1px solid var(--line)}
+    .notes-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px}
+    .notes h2{font-family:"Newsreader","Noto Sans SC",serif;font-size:31px;margin:0 0 12px}
+    .notes p{font-size:12px;color:var(--muted);margin:0 0 10px}
+    .source-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+    .source-links a{color:var(--teal);font-size:12px;font-weight:700;text-underline-offset:3px}
+    .policy-list{list-style:none;padding:0;margin:0;display:grid;gap:9px}
+    .policy-list li{font-size:12px;color:var(--muted);padding-bottom:9px;border-bottom:1px solid var(--line)}
+    .policy-list b{color:var(--ink)}
+
+    @media(max-width:1080px){
+      .table-head,.destination-row{grid-template-columns:64px minmax(250px,1.2fr) minmax(210px,1fr) minmax(150px,.68fr) minmax(190px,.85fr)}
+      .table-head>div:nth-child(5),.destination-row>div:nth-child(5){display:none}
+    }
+    @media(max-width:900px){
+      .intro-grid{grid-template-columns:1fr;gap:28px}
+      .intro-note{max-width:540px}
+      .gallery{grid-template-columns:1.2fr .8fr;grid-template-rows:230px 230px}
+      .feature:nth-child(3){display:none}
+      .gallery-more{grid-template-columns:repeat(3,1fr)}
+      .table-head,.destination-row{grid-template-columns:60px minmax(220px,1.1fr) minmax(200px,1fr) minmax(180px,.85fr)}
+      .table-head>div:nth-child(4),.destination-row>div:nth-child(4){display:none}
+    }
+    @media(max-width:680px){
+      .wrap{width:min(100% - 28px,1180px)}
+      .intro{padding-top:44px}
+      h1{font-size:47px}
+      .lede{font-size:16px}
+      .gallery{grid-template-columns:1fr 1fr;grid-template-rows:340px 180px}
+      .feature:first-child{grid-column:1/3;grid-row:auto}
+      .feature:nth-child(3){display:block}
+      .feature-copy{left:14px;right:14px;bottom:13px}
+      .gallery-more{grid-template-columns:repeat(2,1fr)}
+      .mini-feature{min-height:132px}
+      .stats{grid-template-columns:1fr}
+      .stat{border-right:0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:12px}
+      .stat:last-child{border-bottom:0}
+      .explorer{margin-top:44px}
+      .explorer-head{display:block}
+      .explorer-head p{text-align:left;margin-top:8px}
+      .control-row{grid-template-columns:1fr}
+      .controls{position:relative;backdrop-filter:none}
+      .chips{flex-wrap:nowrap;overflow:visible;display:grid;grid-template-columns:repeat(3,1fr)}
+      .chip{padding-inline:6px}
+      .table-head{display:none}
+      .destination-table{border:0;background:transparent;display:grid;gap:10px}
+      .destination-row{display:grid;grid-template-columns:54px 1fr;grid-template-areas:"rank name" "rank reason" "rank place" "rank visa";min-height:0;border:1px solid var(--line);background:var(--panel);padding:14px 12px}
+      .destination-row>div{padding:0}
+      .destination-row:hover{background:var(--panel)}
+      .destination-row .rank-cell{grid-area:rank;font-size:28px}
+      .destination-row .name-cell{grid-area:name;padding-bottom:11px;border-bottom:1px solid var(--line)}
+      .destination-media{grid-template-columns:116px minmax(0,1fr);gap:12px;align-items:start}
+      .image-button,.image-fallback{width:116px;height:82px}
+      .image-button::after{opacity:1;transform:none}
+      .destination-row .reason-cell{grid-area:reason;padding:11px 0;border-bottom:1px solid var(--line)}
+      .destination-row .place{grid-area:place;padding:9px 0 7px;font-size:12px}
+      .lightbox{padding:60px 14px 72px;overflow-y:auto}
+      .lightbox-figure{max-height:none;grid-template-columns:1fr;gap:18px;align-items:start}
+      .lightbox-image{max-height:56vh}
+      .lightbox-caption{width:min(680px,100%);margin-inline:auto}
+      .lightbox-rank{margin-bottom:6px}
+      .lightbox-name{font-size:30px}
+      .lightbox-en,.lightbox-place{margin-bottom:12px}
+      .lightbox-reason{padding-top:13px;font-size:14px}
+      .lightbox-close{top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right))}
+      .lightbox-nav{top:auto;bottom:max(16px,env(safe-area-inset-bottom));width:42px;height:42px;margin:0;font-size:27px}
+      .lightbox-prev{left:max(14px,env(safe-area-inset-left))}
+      .lightbox-next{right:max(14px,env(safe-area-inset-right))}
+      .lightbox-caption{padding-inline:40px}
+      .destination-row .place::before{content:attr(data-country) " · ";font-weight:700;color:var(--ink)}
+      .destination-row .country{display:none}
+      .destination-row .visa-cell{grid-area:visa}
+      .notes-grid{grid-template-columns:1fr;gap:26px}
+    }
+    @media(max-width:420px){
+      h1{font-size:41px}
+      .gallery{grid-template-rows:300px 158px}
+      .gallery-more{grid-template-columns:1fr 1fr}
+      .mini-feature{min-height:118px}
+      .feature-copy p{display:none}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .feature img,.destination-image,.image-button::after{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="intro wrap">
+    <div class="intro-grid">
+      <div>
+        <p class="edition">ULTIMATE TRAVELIST · 2015</p>
+        <h1>一生要看的<br>498 个地方</h1>
+        <p class="lede">从吴哥窟到费城独立国家历史公园：完整排行、中文名、具体地点、国家与中国普通护照入境方式，一页查完。</p>
+      </div>
+      <aside class="intro-note" aria-label="数据说明">
+        <b>签证信息是日期快照</b>
+        <span>基于中国普通护照、以旅游为目的的简化分类。更新于 <time datetime="2026-10-12">2026-10-12</time>，出行前仍应以目的地官方口径为准。</span>
+      </aside>
+    </div>
+  </header>
+
+  <section class="wrap" aria-label="榜单前十二名图片精选">
+    <div class="gallery" id="featureGallery"></div>
+    <div class="gallery-more" id="featureMore"></div>
+    <div class="stats" aria-label="榜单概览">
+      <div class="stat"><strong>498</strong><span>个目的地，依原榜单顺序</span></div>
+      <div class="stat"><strong id="countryStat">—</strong><span>种国家 / 地区组合</span></div>
+      <div class="stat"><strong id="easyStat">—</strong><span>条免签 / 落地签 / 电子签记录</span></div>
+    </div>
+  </section>
+
+  <section class="explorer" id="all-destinations">
+    <div class="wrap explorer-head">
+      <h2>完整目的地表</h2>
+      <p>支持中英文、地点与国家搜索 · 一句话亮点为编辑概括，非原榜单原文</p>
+    </div>
+    <div class="controls">
+      <div class="wrap">
+        <div class="control-row">
+          <label class="field">
+            <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">搜索目的地</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input id="search" type="search" placeholder="搜索：吴哥窟、冰岛、博物馆…" autocomplete="off">
+          </label>
+          <label>
+            <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">按国家或地区筛选</span>
+            <select id="countryFilter"><option value="">全部国家 / 地区</option></select>
+          </label>
+          <label>
+            <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">按排名范围筛选</span>
+            <select id="rankFilter">
+              <option value="">全部排名</option>
+              <option value="1-50">Top 50</option>
+              <option value="51-100">51–100</option>
+              <option value="101-250">101–250</option>
+              <option value="251-498">251–498</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" id="visaFilters" aria-label="按签证方式筛选">
+          <button class="chip" type="button" data-visa="" aria-pressed="true">全部</button>
+          <button class="chip" type="button" data-visa="免签" aria-pressed="false">免签</button>
+          <button class="chip" type="button" data-visa="落地签" aria-pressed="false">落地签</button>
+          <button class="chip" type="button" data-visa="电子签" aria-pressed="false">电子签</button>
+          <button class="chip" type="button" data-visa="需提前" aria-pressed="false">提前办签</button>
+          <button class="chip" type="button" data-visa="其他" aria-pressed="false">国内 / 其他</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="results-bar">
+        <div><strong id="resultCount">498 个目的地</strong> <span id="filterSummary"></span></div>
+        <button class="reset" type="button" id="resetFilters">清除筛选</button>
+      </div>
+      <div class="destination-table" role="table" aria-label="Lonely Planet 旅行目的地排行">
+        <div class="table-head" role="row">
+          <div role="columnheader">排名</div>
+          <div role="columnheader">目的地</div>
+          <div role="columnheader">入选理由</div>
+          <div role="columnheader">具体地点</div>
+          <div role="columnheader">国家 / 地区</div>
+          <div role="columnheader">中国普通护照</div>
+        </div>
+        <div id="rows"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="目的地大图">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="关闭大图">×</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="查看上一张图片">‹</button>
+    <figure class="lightbox-figure">
+      <img class="lightbox-image" id="lightboxImage" alt="">
+      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="查看下一张图片">›</button>
+  </div>
+
+  <footer class="notes">
+    <div class="wrap notes-grid">
+      <div>
+        <h2>资料来源</h2>
+        <p>榜单名称与顺序来自用户提供的 Lonely Planet 2015 年 Ultimate Travelist / List Challenges 列表，共 498 条。个别原始条目存在拼写、地点或录入疑问，表中按“存疑”标注，不擅自补写。</p>
+        <div class="source-links">
+          <a href="https://www.listchallenges.com/lonely-planet-ultimate-travel-top-500-sights" target="_blank" rel="noreferrer">查看 List Challenges 原榜单</a>
+          <a href="http://www.lonelyplanet.com/news/2015/08/17/worlds-top-500-sights-revealed-in-lonely-planets-ultimate-travelist-2015/" target="_blank" rel="noreferrer">查看 Lonely Planet 来源页</a>
+        </div>
+      </div>
+      <div>
+        <h2>签证阅读提示</h2>
+        <ul class="policy-list">
+          <li><b>免签、落地签、电子签</b> 只表示主要旅游入境路径，仍可能有停留天数、返程机票、资金、住宿、口岸或线上登记要求。</li>
+          <li><b>柬埔寨：</b>页面按 2026-10-12 快照标为试行免签 14 天；该政策原定 2026-10-15 到期，之后须重新核实。</li>
+          <li><b>俄罗斯：</b>临时免签已于 2026-09-14 到期；页面按电子签路径归类。</li>
+          <li><b>黑山：</b>有条件免签安排至 2026-10-31；2026-11-01 起按需提前办理签证显示。</li>
+          <li><b>多国 / 多地区景点</b>可能显示组合政策；最终取决于实际入境口岸和路线。</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const DATA = [{"rank":1,"en":"Angkor Wat","cn":"吴哥窟","loc":"暹粒","country":"柬埔寨","visa":"免签（试行至2026-10-15，14天）"},{"rank":2,"en":"Great Barrier Reef","cn":"大堡礁","loc":"昆士兰州","country":"澳大利亚","visa":"需提前办理签证"},{"rank":3,"en":"Machu Picchu","cn":"马丘比丘","loc":"库斯科大区","country":"秘鲁","visa":"需提前办理签证"},{"rank":4,"en":"Great Wall of China","cn":"万里长城","loc":"中国北方多省","country":"中国","visa":"不适用（国内）"},{"rank":5,"en":"Taj Mahal","cn":"泰姬陵","loc":"阿格拉，北方邦","country":"印度","visa":"电子签"},{"rank":6,"en":"Grand Canyon","cn":"科罗拉多大峡谷","loc":"亚利桑那州","country":"美国","visa":"需提前办理签证"},{"rank":7,"en":"Colosseum","cn":"罗马斗兽场","loc":"罗马","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":8,"en":"Iguazu Falls","cn":"伊瓜苏瀑布","loc":"阿根廷/巴西边境","country":"阿根廷、巴西","visa":"需提前办理签证"},{"rank":9,"en":"Alhambra","cn":"阿尔罕布拉宫","loc":"格拉纳达","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":10,"en":"Aya Sofya (Hagia Sophia)","cn":"圣索菲亚大教堂","loc":"伊斯坦布尔","country":"土耳其","visa":"电子签"},{"rank":11,"en":"Medina of Fez","cn":"非斯老城","loc":"非斯","country":"摩洛哥","visa":"免签"},{"rank":12,"en":"Twelve Apostles","cn":"十二门徒石","loc":"维多利亚州大洋路","country":"澳大利亚","visa":"需提前办理签证"},{"rank":13,"en":"Petra","cn":"佩特拉古城","loc":"马安省","country":"约旦","visa":"落地签"},{"rank":14,"en":"Tikal National Park","cn":"蒂卡尔国家公园","loc":"佩滕省","country":"危地马拉","visa":"需提前办理签证"},{"rank":15,"en":"British Museum","cn":"大英博物馆","loc":"伦敦","country":"英国","visa":"需提前办理签证"},{"rank":16,"en":"Sagrada Familia","cn":"圣家族大教堂","loc":"巴塞罗那","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":17,"en":"Fiordland National Park","cn":"峡湾国家公园","loc":"南岛","country":"新西兰","visa":"需提前办理签证"},{"rank":18,"en":"Santorini","cn":"圣托里尼","loc":"基克拉泽斯群岛","country":"希腊","visa":"需提前办理签证（申根签）"},{"rank":19,"en":"Galapagos Islands","cn":"加拉帕戈斯群岛","loc":"加拉帕戈斯省","country":"厄瓜多尔","visa":"需提前办理签证"},{"rank":20,"en":"Museum of Old and New Art","cn":"古今艺术博物馆","loc":"霍巴特，塔斯马尼亚","country":"澳大利亚","visa":"需提前办理签证"},{"rank":21,"en":"Yosemite","cn":"约塞米蒂国家公园","loc":"加利福尼亚州","country":"美国","visa":"需提前办理签证"},{"rank":22,"en":"Dubrovnik","cn":"杜布罗夫尼克古城","loc":"达尔马提亚","country":"克罗地亚","visa":"需提前办理签证（申根签）"},{"rank":23,"en":"Salar De Uyuni (Bolivia)","cn":"乌尤尼盐沼","loc":"波托西省","country":"玻利维亚","visa":"落地签"},{"rank":24,"en":"Bagan","cn":"蒲甘","loc":"曼德勒省","country":"缅甸","visa":"落地签"},{"rank":25,"en":"The Pyramids of Giza","cn":"吉萨金字塔群","loc":"吉萨","country":"埃及","visa":"落地签"},{"rank":26,"en":"Piazza San Marco","cn":"圣马可广场","loc":"威尼斯","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":27,"en":"Victoria Falls","cn":"维多利亚瀑布","loc":"赞比亚/津巴布韦边境","country":"赞比亚、津巴布韦","visa":"免签；落地签"},{"rank":28,"en":"Acropolis","cn":"雅典卫城","loc":"雅典","country":"希腊","visa":"需提前办理签证（申根签）"},{"rank":29,"en":"Versailles","cn":"凡尔赛宫","loc":"法兰西岛大区","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":30,"en":"Marrakech","cn":"马拉喀什","loc":"马拉喀什","country":"摩洛哥","visa":"免签"},{"rank":31,"en":"Hanoi's Old Quarter","cn":"河内老街区","loc":"河内","country":"越南","visa":"电子签"},{"rank":32,"en":"Cradle Mountain","cn":"摇篮山","loc":"塔斯马尼亚","country":"澳大利亚","visa":"需提前办理签证"},{"rank":33,"en":"Uluru","cn":"乌鲁鲁巨石","loc":"北领地","country":"澳大利亚","visa":"需提前办理签证"},{"rank":34,"en":"Charles Bridge","cn":"查理大桥","loc":"布拉格","country":"捷克","visa":"需提前办理签证（申根签）"},{"rank":35,"en":"Abel Tasman National Park","cn":"亚伯塔斯曼国家公园","loc":"南岛","country":"新西兰","visa":"需提前办理签证"},{"rank":36,"en":"Lake District","cn":"湖区","loc":"坎布里亚郡，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":37,"en":"Louvre Museum","cn":"卢浮宫","loc":"巴黎","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":38,"en":"Torres Del Paine National Park","cn":"百内国家公园","loc":"巴塔哥尼亚","country":"智利","visa":"需提前办理签证"},{"rank":39,"en":"Lake Baikal","cn":"贝加尔湖","loc":"西伯利亚","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":40,"en":"Eiffel Tower","cn":"埃菲尔铁塔","loc":"巴黎","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":41,"en":"Pompeii","cn":"庞贝古城","loc":"坎帕尼亚大区","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":42,"en":"Havana","cn":"哈瓦那","loc":"哈瓦那","country":"古巴","visa":"免签"},{"rank":43,"en":"Table Mountain","cn":"桌山","loc":"开普敦","country":"南非","visa":"需提前办理签证"},{"rank":44,"en":"Old Town Square, Prague","cn":"布拉格老城广场","loc":"布拉格","country":"捷克","visa":"需提前办理签证（申根签）"},{"rank":45,"en":"Serengeti National Park","cn":"塞伦盖蒂国家公园","loc":"塞伦盖蒂","country":"坦桑尼亚","visa":"落地签"},{"rank":46,"en":"Hermitage","cn":"冬宫","loc":"圣彼得堡","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":47,"en":"Bay of Kotor","cn":"科托尔湾","loc":"科托尔湾","country":"黑山","visa":"有条件免签至2026-10-31；之后需提前办理签证"},{"rank":48,"en":"Jaisalmer, Rajasthan","cn":"斋沙默尔","loc":"拉贾斯坦邦","country":"印度","visa":"电子签"},{"rank":49,"en":"Ngorongoro Crater Conservation Area","cn":"恩戈罗恩戈罗火山口","loc":"恩戈罗恩戈罗","country":"坦桑尼亚","visa":"落地签"},{"rank":50,"en":"Hiroshima","cn":"广岛","loc":"广岛","country":"日本","visa":"需提前办理签证"},{"rank":51,"en":"Pantheon","cn":"万神殿","loc":"罗马","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":52,"en":"Tate Modern","cn":"泰特现代美术馆","loc":"伦敦","country":"英国","visa":"需提前办理签证"},{"rank":53,"en":"Naqsh-E Jahan","cn":"伊玛目广场","loc":"伊斯法罕","country":"伊朗","visa":"免签"},{"rank":54,"en":"Tiger Leaping Gorge","cn":"虎跳峡","loc":"云南","country":"中国","visa":"不适用（国内）"},{"rank":55,"en":"Notre Dame","cn":"巴黎圣母院","loc":"巴黎","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":56,"en":"Kakadu National Park","cn":"卡卡杜国家公园","loc":"北领地","country":"澳大利亚","visa":"需提前办理签证"},{"rank":57,"en":"Sydney Opera House","cn":"悉尼歌剧院","loc":"悉尼","country":"澳大利亚","visa":"需提前办理签证"},{"rank":58,"en":"Edinburgh Castle","cn":"爱丁堡城堡","loc":"爱丁堡，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":59,"en":"Anne Frank Huis","cn":"安妮·弗兰克之家","loc":"阿姆斯特丹","country":"荷兰","visa":"需提前办理签证（申根签）"},{"rank":60,"en":"Jökulsarlon","cn":"杰古沙龙冰河湖","loc":"冰岛东南部","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":61,"en":"Yellowstone National Park","cn":"黄石国家公园","loc":"怀俄明/蒙大拿/爱达荷州","country":"美国","visa":"需提前办理签证"},{"rank":62,"en":"Stonehenge","cn":"巨石阵","loc":"威尔特郡，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":63,"en":"Berlin Wall","cn":"柏林墙","loc":"柏林","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":64,"en":"Isle of Skye","cn":"斯凯岛","loc":"苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":65,"en":"Halong Bay","cn":"下龙湾","loc":"广宁省","country":"越南","visa":"电子签"},{"rank":66,"en":"Santa Maria Del Fiore (Florence Cathedral)","cn":"佛罗伦萨大教堂","loc":"佛罗伦萨","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":67,"en":"Cappadocia","cn":"卡帕多奇亚","loc":"安纳托利亚中部","country":"土耳其","visa":"电子签"},{"rank":68,"en":"Ko Tao","cn":"涛岛","loc":"素叻他尼府","country":"泰国","visa":"免签"},{"rank":69,"en":"Palenque","cn":"帕伦克遗址","loc":"恰帕斯州","country":"墨西哥","visa":"需提前办理签证"},{"rank":70,"en":"Ilulissat Kangerlua (Ilulissat Icefjord)","cn":"伊卢利萨特冰峡湾","loc":"伊卢利萨特","country":"格陵兰（丹麦）","visa":"需提前办理签证（丹麦申根签）"},{"rank":71,"en":"Sinai","cn":"西奈半岛","loc":"西奈半岛","country":"埃及","visa":"落地签"},{"rank":72,"en":"Pao De Acucar (Sugarloaf)","cn":"糖面包山","loc":"里约热内卢","country":"巴西","visa":"需提前办理签证"},{"rank":73,"en":"Mezquita of Cordoba","cn":"科尔多瓦大清真寺","loc":"科尔多瓦","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":74,"en":"Lalibela","cn":"拉利贝拉岩石教堂","loc":"阿姆哈拉州","country":"埃塞俄比亚","visa":"落地签"},{"rank":75,"en":"Arashiyama - Kyoto","cn":"岚山","loc":"京都","country":"日本","visa":"需提前办理签证"},{"rank":76,"en":"Lake Bled","cn":"布莱德湖","loc":"布莱德湖","country":"斯洛文尼亚","visa":"需提前办理签证（申根签）"},{"rank":77,"en":"Redwood National Park","cn":"红杉国家公园","loc":"加利福尼亚州","country":"美国","visa":"需提前办理签证"},{"rank":78,"en":"Chichen Itza","cn":"奇琴伊察","loc":"尤卡坦州","country":"墨西哥","visa":"需提前办理签证"},{"rank":79,"en":"Masai Mara","cn":"马赛马拉","loc":"马赛马拉","country":"肯尼亚","visa":"电子签"},{"rank":80,"en":"Metropolitan Museum of Art","cn":"大都会艺术博物馆","loc":"纽约","country":"美国","visa":"需提前办理签证"},{"rank":81,"en":"Franz Josef","cn":"弗朗茨·约瑟夫冰川","loc":"南岛西海岸","country":"新西兰","visa":"需提前办理签证"},{"rank":82,"en":"Valley of the Kings","cn":"帝王谷","loc":"卢克索","country":"埃及","visa":"落地签"},{"rank":83,"en":"Hoi An","cn":"会安古城","loc":"广南省","country":"越南","visa":"电子签"},{"rank":84,"en":"Monument Valley","cn":"纪念碑谷","loc":"亚利桑那/犹他州","country":"美国","visa":"需提前办理签证"},{"rank":85,"en":"St. Peter's Basilica, Vatican","cn":"圣彼得大教堂","loc":"梵蒂冈城","country":"梵蒂冈","visa":"需提前办理签证（申根签）"},{"rank":86,"en":"Dome of the Rock","cn":"圆顶清真寺","loc":"耶路撒冷老城圣殿山","country":"耶路撒冷（主权争议）","visa":"需提前办理签证（以色列签证）"},{"rank":87,"en":"Red Square, Moscow","cn":"红场","loc":"莫斯科","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":88,"en":"Forbidden City, Beijing","cn":"紫禁城","loc":"北京","country":"中国","visa":"不适用（国内）"},{"rank":89,"en":"Uffizi Gallery","cn":"乌菲兹美术馆","loc":"佛罗伦萨","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":90,"en":"Nepal: Everest Base Camp Trek","cn":"珠峰南坡大本营徒步","loc":"珠峰南坡大本营徒步线","country":"尼泊尔","visa":"落地签"},{"rank":91,"en":"Shwedagon Pagoda","cn":"仰光大金塔","loc":"仰光","country":"缅甸","visa":"落地签"},{"rank":92,"en":"Teotihuacan","cn":"特奥蒂瓦坎","loc":"墨西哥州","country":"墨西哥","visa":"需提前办理签证"},{"rank":93,"en":"Blue Lagoon","cn":"蓝湖","loc":"格林达维克","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":94,"en":"Lake Wanaka","cn":"瓦纳卡湖","loc":"奥塔哥，南岛","country":"新西兰","visa":"需提前办理签证"},{"rank":95,"en":"Abu Simbel","cn":"阿布辛贝神庙","loc":"阿斯旺","country":"埃及","visa":"落地签"},{"rank":96,"en":"Le Cimetière de Père Lachaise","cn":"拉雪兹神父公墓","loc":"巴黎","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":97,"en":"Big Sur","cn":"大瑟尔","loc":"加利福尼亚州","country":"美国","visa":"需提前办理签证"},{"rank":98,"en":"Matterhorn","cn":"马特洪峰","loc":"瓦莱州（瑞士/意大利边境）","country":"瑞士、意大利","visa":"需提前办理签证（申根签）"},{"rank":99,"en":"Gamla Stan, Stockholm","cn":"斯德哥尔摩老城","loc":"斯德哥尔摩","country":"瑞典","visa":"需提前办理签证（申根签）"},{"rank":100,"en":"Okavango Delta","cn":"奥卡万戈三角洲","loc":"奥卡万戈三角洲","country":"博茨瓦纳","visa":"电子签"},{"rank":101,"en":"Golden Gate Bridge","cn":"金门大桥","loc":"旧金山","country":"美国","visa":"需提前办理签证"},{"rank":102,"en":"Dashashwamedh Ghat","cn":"达萨斯瓦梅朵河坛","loc":"瓦拉纳西","country":"印度","visa":"电子签"},{"rank":103,"en":"Giant's Causeway","cn":"巨人之路","loc":"北爱尔兰","country":"英国","visa":"需提前办理签证"},{"rank":104,"en":"Auschwitz Memorial","cn":"奥斯威辛纪念馆","loc":"奥斯威辛","country":"波兰","visa":"需提前办理签证（申根签）"},{"rank":105,"en":"Parque Nacional Corcovado","cn":"科尔科瓦多国家公园","loc":"奥萨半岛","country":"哥斯达黎加","visa":"需提前办理签证"},{"rank":106,"en":"Niagara Falls","cn":"尼亚加拉瀑布","loc":"安大略/纽约州边境","country":"加拿大、美国","visa":"需提前办理签证"},{"rank":107,"en":"Potala Palace, Lhasa","cn":"布达拉宫","loc":"拉萨，西藏","country":"中国","visa":"不适用（国内）"},{"rank":108,"en":"Bora Bora","cn":"波拉波拉岛","loc":"波拉波拉岛","country":"法属波利尼西亚（法国）","visa":"需提前办理签证（法国签证）"},{"rank":109,"en":"Empire State Building","cn":"帝国大厦","loc":"纽约","country":"美国","visa":"需提前办理签证"},{"rank":110,"en":"Budapest","cn":"布达佩斯","loc":"布达佩斯","country":"匈牙利","visa":"需提前办理签证（申根签）"},{"rank":111,"en":"Topkapi Palace","cn":"托普卡帕宫","loc":"伊斯坦布尔","country":"土耳其","visa":"电子签"},{"rank":112,"en":"Historic Centre (Old Town) of Tallinn","cn":"塔林老城","loc":"塔林","country":"爱沙尼亚","visa":"需提前办理签证（申根签）"},{"rank":113,"en":"Stari Most Bridge","cn":"莫斯塔尔古桥","loc":"莫斯塔尔","country":"波黑","visa":"免签"},{"rank":114,"en":"Ayuthaya","cn":"大城","loc":"大城府","country":"泰国","visa":"免签"},{"rank":115,"en":"Vatican Museum","cn":"梵蒂冈博物馆","loc":"梵蒂冈城","country":"梵蒂冈","visa":"需提前办理签证（申根签）"},{"rank":116,"en":"Anakena Beach, Easter Island","cn":"阿纳凯纳海滩","loc":"复活节岛","country":"智利","visa":"需提前办理签证"},{"rank":117,"en":"The Peak, Hong Kong","cn":"太平山顶","loc":"香港太平山","country":"中国","visa":"不适用（国内）"},{"rank":118,"en":"St. Paul's Cathedral","cn":"圣保罗大教堂","loc":"伦敦","country":"英国","visa":"需提前办理签证"},{"rank":119,"en":"Meteora","cn":"迈泰奥拉","loc":"色萨利大区","country":"希腊","visa":"需提前办理签证（申根签）"},{"rank":120,"en":"Temple and Cemetery of Confucius and the Kong Family Mansion in Qufu","cn":"曲阜三孔","loc":"曲阜，山东","country":"中国","visa":"不适用（国内）"},{"rank":121,"en":"Copper Canyon","cn":"铜峡谷","loc":"奇瓦瓦州","country":"墨西哥","visa":"需提前办理签证"},{"rank":122,"en":"Monte Fitz Roy, El Chalten","cn":"菲茨罗伊峰","loc":"阿根廷/智利边境","country":"阿根廷、智利","visa":"需提前办理签证"},{"rank":123,"en":"Aiguille Du Midi","cn":"南针峰","loc":"霞慕尼","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":124,"en":"Bryggen","cn":"布吕根","loc":"卑尔根","country":"挪威","visa":"需提前办理签证（申根签）"},{"rank":125,"en":"Stewart Island","cn":"斯图尔特岛","loc":"斯图尔特岛","country":"新西兰","visa":"需提前办理签证"},{"rank":126,"en":"Bhaktapur Durbar Square","cn":"巴德岗杜巴广场","loc":"巴德岗","country":"尼泊尔","visa":"落地签"},{"rank":127,"en":"Bazaruto Archipelago","cn":"巴扎鲁托群岛","loc":"巴扎鲁托群岛","country":"莫桑比克","visa":"落地签"},{"rank":128,"en":"Andaz Amsterdam Prinsengracht","cn":"安达仕酒店（阿姆斯特丹）","loc":"阿姆斯特丹（酒店）","country":"荷兰","visa":"需提前办理签证（申根签）"},{"rank":129,"en":"Plitvice Lakes National Park","cn":"十六湖国家公园","loc":"十六湖国家公园","country":"克罗地亚","visa":"需提前办理签证（申根签）"},{"rank":130,"en":"Bay of Islands","cn":"岛屿湾","loc":"岛屿湾","country":"新西兰","visa":"需提前办理签证"},{"rank":131,"en":"Pantanal","cn":"潘塔纳尔湿地","loc":"潘塔纳尔湿地","country":"巴西","visa":"需提前办理签证"},{"rank":132,"en":"Great Buddha","cn":"镰仓大佛","loc":"镰仓","country":"日本","visa":"需提前办理签证"},{"rank":133,"en":"Museum of Anthropology, Vancouver","cn":"温哥华人类学博物馆","loc":"温哥华，BC省","country":"加拿大","visa":"需提前办理签证"},{"rank":134,"en":"Skara Brae","cn":"斯卡拉布雷","loc":"奥克尼群岛，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":135,"en":"West Norwegian Fjords – Geirangerfjord and Nærøyfjord","cn":"盖朗厄尔峡湾与纳柔依峡湾","loc":"盖朗厄尔/纳柔依峡湾","country":"挪威","visa":"需提前办理签证（申根签）"},{"rank":136,"en":"Tayrona National Park","cn":"泰罗纳国家公园","loc":"泰罗纳","country":"哥伦比亚","visa":"需提前办理签证"},{"rank":137,"en":"Choquequirao","cn":"乔克基劳","loc":"乔克基劳","country":"秘鲁","visa":"需提前办理签证"},{"rank":138,"en":"Ephesus","cn":"以弗所","loc":"伊兹密尔","country":"土耳其","visa":"电子签"},{"rank":139,"en":"Kruger National Park","cn":"克鲁格国家公园","loc":"克鲁格","country":"南非","visa":"需提前办理签证"},{"rank":140,"en":"Tulum","cn":"图卢姆","loc":"金塔纳罗奥州","country":"墨西哥","visa":"需提前办理签证"},{"rank":141,"en":"Tsukiji Fish Market","cn":"筑地市场","loc":"东京","country":"日本","visa":"需提前办理签证"},{"rank":142,"en":"Sintra","cn":"辛特拉","loc":"辛特拉","country":"葡萄牙","visa":"需提前办理签证（申根签）"},{"rank":143,"en":"Carcassonne","cn":"卡尔卡松","loc":"卡尔卡松","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":144,"en":"Statue of Liberty","cn":"自由女神像","loc":"纽约","country":"美国","visa":"需提前办理签证"},{"rank":145,"en":"Vatnajokull Glacier Cave","cn":"瓦特纳冰川冰洞","loc":"瓦特纳冰川","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":146,"en":"Blue Mosque, Istanbul","cn":"蓝色清真寺","loc":"伊斯坦布尔","country":"土耳其","visa":"电子签"},{"rank":147,"en":"Gion District","cn":"祇园","loc":"京都祇园","country":"日本","visa":"需提前办理签证"},{"rank":148,"en":"Grand Buddha, Leshan","cn":"乐山大佛","loc":"乐山，四川","country":"中国","visa":"不适用（国内）"},{"rank":149,"en":"Cave of Altamira and Paleolithic Cave Art of Northern Spain","cn":"阿尔塔米拉洞窟","loc":"坎塔布里亚","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":150,"en":"Haida Gwaii","cn":"海达瓜依群岛","loc":"不列颠哥伦比亚省","country":"加拿大","visa":"需提前办理签证"},{"rank":151,"en":"Bairro of Ribeira","cn":"波尔图滨河区","loc":"波尔图","country":"葡萄牙","visa":"需提前办理签证（申根签）"},{"rank":152,"en":"Koya-San","cn":"高野山","loc":"和歌山县高野山","country":"日本","visa":"需提前办理签证"},{"rank":153,"en":"Mt. Etna","cn":"埃特纳火山","loc":"西西里岛","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":154,"en":"Eiger","cn":"艾格峰","loc":"伯尔尼阿尔卑斯","country":"瑞士","visa":"需提前办理签证（申根签）"},{"rank":155,"en":"Walt Disney World","cn":"迪士尼世界","loc":"佛罗里达州","country":"美国","visa":"需提前办理签证"},{"rank":156,"en":"Chernobyl Exclusion Zone","cn":"切尔诺贝利隔离区","loc":"切尔诺贝利","country":"乌克兰","visa":"电子签"},{"rank":157,"en":"Shibuya Crossing, Tokyo","cn":"涩谷十字路口","loc":"东京涩谷","country":"日本","visa":"需提前办理签证"},{"rank":158,"en":"Valle De Vinales","cn":"比尼亚莱斯谷","loc":"比尼亚莱斯谷","country":"古巴","visa":"免签"},{"rank":159,"en":"Schloss Neuschwanstein","cn":"新天鹅堡","loc":"巴伐利亚州","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":160,"en":"Terracotta Warriors","cn":"秦始皇陵兵马俑","loc":"西安，陕西","country":"中国","visa":"不适用（国内）"},{"rank":161,"en":"Shackleton's Hut, Antartica","cn":"沙克尔顿小屋","loc":"罗斯岛","country":"南极洲","visa":"不适用（随船/团）"},{"rank":162,"en":"Icehotel, Jukkasjärvi","cn":"冰酒店","loc":"尤卡斯耶尔维","country":"瑞典","visa":"需提前办理签证（申根签）"},{"rank":163,"en":"Hike From Moraine Lake Through Paradise Valley","cn":"梦莲湖-天堂谷徒步","loc":"班夫，阿尔伯塔省","country":"加拿大","visa":"需提前办理签证"},{"rank":164,"en":"Roman Baths, Bath","cn":"巴斯罗马浴场","loc":"巴斯，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":165,"en":"Chobe National Park","cn":"乔贝国家公园","loc":"乔贝","country":"博茨瓦纳","visa":"电子签"},{"rank":166,"en":"Inle Lake","cn":"茵莱湖","loc":"掸邦","country":"缅甸","visa":"落地签"},{"rank":167,"en":"Kota Kinabalu","cn":"亚庇","loc":"沙巴","country":"马来西亚","visa":"免签"},{"rank":168,"en":"Phong Nha-Ke Bang National Park","cn":"峰牙-己榜国家公园","loc":"广平省","country":"越南","visa":"电子签"},{"rank":169,"en":"Edinburgh Royal Mile","cn":"皇家英里","loc":"爱丁堡，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":170,"en":"Cristo Redentor","cn":"里约基督像","loc":"里约热内卢","country":"巴西","visa":"需提前办理签证"},{"rank":171,"en":"National Mall","cn":"国家广场","loc":"华盛顿特区","country":"美国","visa":"需提前办理签证"},{"rank":172,"en":"Prague Castle","cn":"布拉格城堡","loc":"布拉格","country":"捷克","visa":"需提前办理签证（申根签）"},{"rank":173,"en":"Accra","cn":"阿克拉","loc":"阿克拉","country":"加纳","visa":"需提前办理签证"},{"rank":174,"en":"La Grand-Place, Brussels","cn":"布鲁塞尔大广场","loc":"布鲁塞尔","country":"比利时","visa":"需提前办理签证（申根签）"},{"rank":175,"en":"Visit Kinkaku-Ji","cn":"金阁寺","loc":"京都金阁寺","country":"日本","visa":"需提前办理签证"},{"rank":176,"en":"Gullfoss Waterfall","cn":"黄金瀑布","loc":"古佛斯瀑布","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":177,"en":"The Rocky Mountains","cn":"落基山脉","loc":"落基山脉","country":"美国、加拿大","visa":"需提前办理签证"},{"rank":178,"en":"Egyptian Museum","cn":"埃及博物馆","loc":"开罗","country":"埃及","visa":"落地签"},{"rank":179,"en":"Gorges Du Verdon","cn":"韦尔东峡谷","loc":"普罗旺斯","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":180,"en":"Amber Fort","cn":"琥珀堡","loc":"斋浦尔，拉贾斯坦邦","country":"印度","visa":"电子签"},{"rank":181,"en":"Snowdonia","cn":"斯诺登尼亚","loc":"斯诺登尼亚","country":"英国（威尔士）","visa":"需提前办理签证"},{"rank":182,"en":"Volcanoes National Park","cn":"卢旺达火山国家公园","loc":"火山国家公园","country":"卢旺达","visa":"落地签"},{"rank":183,"en":"Xochimilco","cn":"霍奇米尔科","loc":"墨西哥城","country":"墨西哥","visa":"需提前办理签证"},{"rank":184,"en":"Glencoe","cn":"格伦科","loc":"苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":185,"en":"Mont Blanc","cn":"勃朗峰","loc":"勃朗峰（法/意边境）","country":"法国、意大利","visa":"需提前办理签证（申根签）"},{"rank":186,"en":"Karnak Temple, Luxor","cn":"卡纳克神庙","loc":"卢克索","country":"埃及","visa":"落地签"},{"rank":187,"en":"Gardens by the Bay","cn":"滨海湾花园","loc":"滨海湾花园","country":"新加坡","visa":"免签"},{"rank":188,"en":"Isimangaliso Wetland Park","cn":"伊西曼格利索湿地公园","loc":"夸祖鲁-纳塔尔省","country":"南非","visa":"需提前办理签证"},{"rank":189,"en":"York Minster","cn":"约克大教堂","loc":"约克，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":190,"en":"Van Gogh Museum","cn":"梵高博物馆","loc":"阿姆斯特丹","country":"荷兰","visa":"需提前办理签证（申根签）"},{"rank":191,"en":"Sigiriya","cn":"锡吉里耶","loc":"锡吉里耶","country":"斯里兰卡","visa":"电子签"},{"rank":192,"en":"Visit Madurai Meenakshi Amman Temple","cn":"马杜赖米纳克希神庙","loc":"马杜赖，泰米尔纳德邦","country":"印度","visa":"电子签"},{"rank":193,"en":"Old Tbilisi","cn":"第比利斯老城","loc":"第比利斯老城","country":"格鲁吉亚","visa":"免签"},{"rank":194,"en":"Changdeokgung Palace Complex","cn":"昌德宫","loc":"首尔昌德宫","country":"韩国","visa":"需提前办理签证"},{"rank":195,"en":"DMZ","cn":"朝韩非军事区","loc":"朝韩非军事区","country":"韩国、朝鲜","visa":"需提前办理签证；需提前办理签证（须跟团）"},{"rank":196,"en":"Boudhanath Stupa, Kathmandu","cn":"博达哈大佛塔","loc":"加德满都博达哈大佛塔","country":"尼泊尔","visa":"落地签"},{"rank":197,"en":"Rynek Glowny, Krakow","cn":"克拉科夫中央广场","loc":"克拉科夫中央广场","country":"波兰","visa":"需提前办理签证（申根签）"},{"rank":198,"en":"Mogao Caves","cn":"莫高窟","loc":"敦煌，甘肃","country":"中国","visa":"不适用（国内）"},{"rank":199,"en":"Vat Phou and Associated Ancient Settlements Within the Champasak Culture","cn":"瓦普寺","loc":"占巴塞省","country":"老挝","visa":"落地签"},{"rank":200,"en":"Goree Island","cn":"戈雷岛","loc":"戈雷岛","country":"塞内加尔","visa":"落地签"},{"rank":201,"en":"Mont St Michel","cn":"圣米歇尔山","loc":"诺曼底","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":202,"en":"Blue Mountains","cn":"蓝山","loc":"新南威尔士州","country":"澳大利亚","visa":"需提前办理签证"},{"rank":203,"en":"Island of Mozambique","cn":"莫桑比克岛","loc":"莫桑比克岛","country":"莫桑比克","visa":"落地签"},{"rank":204,"en":"Grand Erg Occidental Desert","cn":"大西Erg沙漠","loc":"大西 Erg 沙漠","country":"阿尔及利亚","visa":"需提前办理签证"},{"rank":205,"en":"San Gimignano","cn":"圣吉米尼亚诺","loc":"托斯卡纳","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":206,"en":"Vasamuseet / the Vasa Museum","cn":"瓦萨博物馆","loc":"斯德哥尔摩瓦萨博物馆","country":"瑞典","visa":"需提前办理签证（申根签）"},{"rank":207,"en":"Portmeirion","cn":"波特梅里恩","loc":"波特梅里恩，威尔士","country":"英国","visa":"需提前办理签证"},{"rank":208,"en":"Times Square","cn":"时代广场","loc":"纽约时代广场","country":"美国","visa":"需提前办理签证"},{"rank":209,"en":"Bacuit Archipelago","cn":"巴库特群岛","loc":"巴拉望","country":"菲律宾","visa":"需提前办理签证"},{"rank":210,"en":"Robben Island","cn":"罗本岛","loc":"开普敦","country":"南非","visa":"需提前办理签证"},{"rank":211,"en":"Borgarfjörður Eystri","cn":"东博尔加峡湾","loc":"冰岛东部","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":212,"en":"Sossusvlei","cn":"索苏斯弗雷","loc":"纳米布沙漠","country":"纳米比亚","visa":"落地签"},{"rank":213,"en":"Wieliczka Salt Mine","cn":"维利奇卡盐矿","loc":"维利奇卡","country":"波兰","visa":"需提前办理签证（申根签）"},{"rank":214,"en":"Parque Nacional Nahuel Huapi","cn":"纳韦尔瓦皮国家公园","loc":"纳韦尔瓦皮","country":"阿根廷","visa":"需提前办理签证"},{"rank":215,"en":"Jellyfish Lake, Eil Malk, Palau","cn":"水母湖","loc":"水母湖","country":"帕劳","visa":"落地签"},{"rank":216,"en":"Vigelandspark in Oslo","cn":"维格兰雕塑公园","loc":"奥斯陆维格兰雕塑公园","country":"挪威","visa":"需提前办理签证（申根签）"},{"rank":217,"en":"Summer Palace, an Imperial Garden in Beijing","cn":"颐和园","loc":"北京颐和园","country":"中国","visa":"不适用（国内）"},{"rank":218,"en":"Old Quebec/Vieux Québec","cn":"魁北克老城","loc":"魁北克省","country":"加拿大","visa":"需提前办理签证"},{"rank":219,"en":"Canterbury Cathedral","cn":"坎特伯雷大教堂","loc":"坎特伯雷，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":220,"en":"Carthage","cn":"迦太基遗址","loc":"迦太基","country":"突尼斯","visa":"需提前办理签证"},{"rank":221,"en":"Reichstag Building","cn":"柏林国会大厦","loc":"柏林国会大厦","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":222,"en":"Group of Monuments at Hampi","cn":"亨比古迹群","loc":"亨比，卡纳塔克邦","country":"印度","visa":"电子签"},{"rank":223,"en":"Malecon De Riohacha","cn":"里奥阿查海滨大道","loc":"里奥阿查","country":"哥伦比亚","visa":"需提前办理签证"},{"rank":224,"en":"Brú Na Bóinne Neolithic Site (County Meath)","cn":"博因河谷巨石墓","loc":"米斯郡","country":"爱尔兰","visa":"需提前办理签证"},{"rank":225,"en":"Museo Del Prado","cn":"普拉多博物馆","loc":"马德里普拉多博物馆","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":226,"en":"Lago Atitlan","cn":"阿蒂特兰湖","loc":"阿蒂特兰湖","country":"危地马拉","visa":"需提前办理签证"},{"rank":227,"en":"Gunung Leuser National Park, Sumatra","cn":"古农列尤择国家公园","loc":"苏门答腊","country":"印度尼西亚","visa":"落地签"},{"rank":228,"en":"Alcatraz","cn":"恶魔岛","loc":"旧金山恶魔岛","country":"美国","visa":"需提前办理签证"},{"rank":229,"en":"Piazza Del Campo, Siena","cn":"锡耶纳田野广场","loc":"锡耶纳","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":230,"en":"Postojna Cave","cn":"波斯托伊纳溶洞","loc":"波斯托伊纳溶洞","country":"斯洛文尼亚","visa":"需提前办理签证（申根签）"},{"rank":231,"en":"Rila Monastery","cn":"里拉修道院","loc":"里拉修道院","country":"保加利亚","visa":"需提前办理签证（申根签）"},{"rank":232,"en":"The Bund, Shanghai","cn":"外滩","loc":"上海外滩","country":"中国","visa":"不适用（国内）"},{"rank":233,"en":"Rijksmuseum","cn":"荷兰国立博物馆","loc":"阿姆斯特丹国立博物馆","country":"荷兰","visa":"需提前办理签证（申根签）"},{"rank":234,"en":"Pont Du Gard","cn":"加尔桥","loc":"加尔桥（奥克西塔尼）","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":235,"en":"Alcazar, Seville","cn":"塞维利亚王宫","loc":"塞维利亚王宫","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":236,"en":"Singapore Zoo","cn":"新加坡动物园","loc":"新加坡动物园","country":"新加坡","visa":"免签"},{"rank":237,"en":"Wadi Rum Protected Area","cn":"瓦迪拉姆","loc":"瓦迪拉姆","country":"约旦","visa":"落地签"},{"rank":238,"en":"Temple of Luxor","cn":"卢克索神庙","loc":"卢克索神庙","country":"埃及","visa":"落地签"},{"rank":239,"en":"Natural History Museum","cn":"伦敦自然历史博物馆","loc":"伦敦自然历史博物馆","country":"英国","visa":"需提前办理签证"},{"rank":240,"en":"Old Delhi","cn":"旧德里","loc":"旧德里","country":"印度","visa":"电子签"},{"rank":241,"en":"Cinque Terre","cn":"五渔村","loc":"利古里亚五渔村","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":242,"en":"Borobudur, Java","cn":"婆罗浮屠","loc":"爪哇岛婆罗浮屠","country":"印度尼西亚","visa":"落地签"},{"rank":243,"en":"Bosque Nuboso Monteverde","cn":"蒙特韦尔德云雾林","loc":"蒙特韦尔德云雾林","country":"哥斯达黎加","visa":"需提前办理签证"},{"rank":244,"en":"Parque Nacional Manuel Antonio","cn":"曼努埃尔安东尼奥国家公园","loc":"曼努埃尔安东尼奥","country":"哥斯达黎加","visa":"需提前办理签证"},{"rank":245,"en":"Duomo, Milan","cn":"米兰大教堂","loc":"米兰大教堂","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":246,"en":"Burj Khalifa","cn":"哈利法塔","loc":"迪拜哈利法塔","country":"阿联酋","visa":"免签"},{"rank":247,"en":"Djenne","cn":"杰内","loc":"杰内","country":"马里","visa":"需提前办理签证"},{"rank":248,"en":"Naoshima","cn":"直岛","loc":"香川县直岛","country":"日本","visa":"需提前办理签证"},{"rank":249,"en":"Tajik National Park (Mountains of the Pamirs)","cn":"帕米尔高原","loc":"帕米尔高原","country":"塔吉克斯坦","visa":"电子签"},{"rank":250,"en":"Silfra, Þingvellir","cn":"丝浮拉裂缝","loc":"辛格维德利","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":251,"en":"Bwindi Impenetrable National Park","cn":"布温迪国家公园","loc":"布温迪","country":"乌干达","visa":"落地签"},{"rank":252,"en":"La Citadelle La Ferrière","cn":"拉费里耶尔城堡","loc":"海地角","country":"海地","visa":"免签"},{"rank":253,"en":"Gallipoli Peninsula","cn":"加里波利半岛","loc":"加里波利半岛","country":"土耳其","visa":"电子签"},{"rank":254,"en":"David Gareja Monastery Complex","cn":"大卫·加雷加修道院","loc":"格鲁吉亚/阿塞拜疆边境","country":"格鲁吉亚、阿塞拜疆","visa":"免签"},{"rank":255,"en":"Rhodes Old Town","cn":"罗得老城","loc":"罗得岛","country":"希腊","visa":"需提前办理签证（申根签）"},{"rank":256,"en":"Church of the Holy Sepulcher","cn":"圣墓教堂","loc":"耶路撒冷老城","country":"耶路撒冷（主权争议）","visa":"需提前办理签证（以色列签证）"},{"rank":257,"en":"Registan Square","cn":"雷吉斯坦广场","loc":"撒马尔罕","country":"乌兹别克斯坦","visa":"免签"},{"rank":258,"en":"Itsukushima Shinto Shrine","cn":"严岛神社","loc":"广岛严岛神社","country":"日本","visa":"需提前办理签证"},{"rank":259,"en":"Lincoln Memorial","cn":"林肯纪念堂","loc":"华盛顿特区","country":"美国","visa":"需提前办理签证"},{"rank":260,"en":"Chenonceau","cn":"舍农索城堡","loc":"卢瓦尔河谷舍农索城堡","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":261,"en":"South Luangwa National Park","cn":"南卢安瓜国家公园","loc":"南卢安瓜","country":"赞比亚","visa":"免签"},{"rank":262,"en":"Valle De La Luna, San Pedro De Atacama","cn":"阿塔卡马月亮谷","loc":"阿塔卡马月亮谷","country":"智利","visa":"需提前办理签证"},{"rank":263,"en":"Ground Zero","cn":"世贸遗址","loc":"纽约世贸遗址","country":"美国","visa":"需提前办理签证"},{"rank":264,"en":"Perito Moreno Glacier, El Calafate","cn":"莫雷诺冰川","loc":"莫雷诺冰川","country":"阿根廷","visa":"需提前办理签证"},{"rank":265,"en":"Ningaloo Marine National Park (WA)","cn":"宁格鲁海洋公园","loc":"西澳大利亚州","country":"澳大利亚","visa":"需提前办理签证"},{"rank":266,"en":"Cultural Landscape of Honghe Hani Rice Terraces","cn":"红河哈尼梯田","loc":"红河哈尼梯田，云南","country":"中国","visa":"不适用（国内）"},{"rank":267,"en":"Mt. McKinley, Alaska","cn":"德纳里峰","loc":"阿拉斯加德纳里峰","country":"美国","visa":"需提前办理签证"},{"rank":268,"en":"Glacier Tour on Athabasca Glacier","cn":"阿萨巴斯卡冰川","loc":"阿尔伯塔省阿萨巴斯卡冰川","country":"加拿大","visa":"需提前办理签证"},{"rank":269,"en":"Timgad","cn":"廷加德","loc":"廷加德","country":"阿尔及利亚","visa":"需提前办理签证"},{"rank":270,"en":"Selous Game Reserve","cn":"塞卢斯禁猎区","loc":"塞卢斯禁猎区","country":"坦桑尼亚","visa":"落地签"},{"rank":271,"en":"Arenal Volcano","cn":"阿雷纳尔火山","loc":"阿雷纳尔火山","country":"哥斯达黎加","visa":"需提前办理签证"},{"rank":272,"en":"Asa Wright Nature Centre & Lodge","cn":"阿萨赖特自然中心","loc":"阿萨赖特自然中心","country":"特立尼达和多巴哥","visa":"需提前办理签证"},{"rank":273,"en":"Picos De Europa","cn":"欧洲之峰","loc":"欧洲之峰","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":274,"en":"Angel Falls","cn":"安赫尔瀑布","loc":"安赫尔瀑布","country":"委内瑞拉","visa":"需提前办理签证"},{"rank":275,"en":"Yakushima","cn":"屋久岛","loc":"鹿儿岛县屋久岛","country":"日本","visa":"需提前办理签证"},{"rank":276,"en":"Redwoods, Whakarewarewa Forest","cn":"罗托鲁瓦红杉林","loc":"罗托鲁瓦","country":"新西兰","visa":"需提前办理签证"},{"rank":277,"en":"Memento Park, Budapest","cn":"记忆公园","loc":"布达佩斯记忆公园","country":"匈牙利","visa":"需提前办理签证（申根签）"},{"rank":278,"en":"Death Valley","cn":"死亡谷","loc":"加州/内华达州","country":"美国","visa":"需提前办理签证"},{"rank":279,"en":"Ko Phi Phi","cn":"皮皮岛","loc":"甲米府皮皮岛","country":"泰国","visa":"免签"},{"rank":280,"en":"Waitomo Caves","cn":"怀托摩萤火虫洞","loc":"怀卡托","country":"新西兰","visa":"需提前办理签证"},{"rank":281,"en":"Eden Project","cn":"伊甸园计划","loc":"康沃尔郡，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":282,"en":"Kizhi Pogost","cn":"基日岛","loc":"卡累利阿","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":283,"en":"Kailash Kher","cn":"冈仁波齐（存疑条目）","loc":"冈仁波齐（存疑条目）","country":"中国（西藏）","visa":"不适用（国内）"},{"rank":284,"en":"Rainbow Reef Dive Center","cn":"彩虹礁","loc":"彩虹礁（塔韦乌尼）","country":"斐济","visa":"免签"},{"rank":285,"en":"Museum of New Zealand (Te Papa Tongarewa)","cn":"蒂帕帕国家博物馆","loc":"惠灵顿","country":"新西兰","visa":"需提前办理签证"},{"rank":286,"en":"Ross Ice Shelf","cn":"罗斯冰架","loc":"罗斯冰架","country":"南极洲","visa":"不适用（随船/团）"},{"rank":287,"en":"Ras Al-Jinz","cn":"拉萨金兹海龟保护区","loc":"拉萨金兹","country":"阿曼","visa":"免签"},{"rank":288,"en":"New Caledonia","cn":"新喀里多尼亚","loc":"新喀里多尼亚","country":"法国（海外属地）","visa":"需提前办理签证（申根签）"},{"rank":289,"en":"Ruins of Kilwa Kisiwani and Ruins of Songo Mnara","cn":"基尔瓦基斯瓦尼遗址","loc":"基尔瓦基斯瓦尼遗址","country":"坦桑尼亚","visa":"落地签"},{"rank":290,"en":"Socotra Island","cn":"索科特拉岛","loc":"索科特拉岛","country":"也门","visa":"需提前办理签证"},{"rank":291,"en":"Old Dhaka","cn":"达卡老城","loc":"达卡老城","country":"孟加拉国","visa":"落地签"},{"rank":292,"en":"Molinere Underwater Sculpture Park, Molinere Bay, Grenada","cn":"莫利纳水下雕塑公园","loc":"莫利纳水下雕塑公园","country":"格林纳达","visa":"免签"},{"rank":293,"en":"Pulau Sipadan Resorts","cn":"诗巴丹岛","loc":"诗巴丹岛，沙巴","country":"马来西亚","visa":"免签"},{"rank":294,"en":"St. David's Cathedral, Cardiff","cn":"圣大卫大教堂","loc":"卡迪夫，威尔士","country":"英国","visa":"需提前办理签证"},{"rank":295,"en":"Dead Sea","cn":"死海","loc":"死海","country":"约旦、以色列","visa":"落地签；需提前办理签证"},{"rank":296,"en":"Mount Kilimanjaro","cn":"乞力马扎罗山","loc":"乞力马扎罗山","country":"坦桑尼亚","visa":"落地签"},{"rank":297,"en":"Cologne Cathedral","cn":"科隆大教堂","loc":"科隆大教堂","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":298,"en":"Drakensburg Mountains","cn":"德拉肯斯山脉","loc":"德拉肯斯山脉","country":"南非、莱索托","visa":"需提前办理签证；电子签"},{"rank":299,"en":"Cotopaxi","cn":"科托帕希火山","loc":"科托帕希火山","country":"厄瓜多尔","visa":"需提前办理签证"},{"rank":300,"en":"Chatuchak Weekend Market, Bangkok","cn":"乍都乍周末市场","loc":"曼谷乍都乍周末市场","country":"泰国","visa":"免签"},{"rank":301,"en":"Tortuguero National Park","cn":"托尔图格罗国家公园","loc":"托尔图格罗","country":"哥斯达黎加","visa":"需提前办理签证"},{"rank":302,"en":"Parc National D´Andringitra","cn":"安德林吉特拉国家公园","loc":"安德林吉特拉","country":"马达加斯加","visa":"落地签"},{"rank":303,"en":"Capri","cn":"卡普里岛","loc":"卡普里岛","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":304,"en":"Bamburgh Castle","cn":"班堡城堡","loc":"诺森伯兰郡，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":305,"en":"Lake Geneva","cn":"日内瓦湖","loc":"日内瓦湖","country":"瑞士、法国","visa":"需提前办理签证（申根签）"},{"rank":306,"en":"Cu Chi Tunnels","cn":"古芝地道","loc":"古芝地道，胡志明市","country":"越南","visa":"电子签"},{"rank":307,"en":"Art Institute of Chicago","cn":"芝加哥艺术学院","loc":"芝加哥艺术学院","country":"美国","visa":"需提前办理签证"},{"rank":308,"en":"L'umorismo Di Piton","cn":"（原榜单存疑条目）","loc":"条目存疑（原榜单疑似录入错误）","country":"未知","visa":"未知"},{"rank":309,"en":"Louisiana Museum of Modern Art","cn":"路易斯安那现代美术馆","loc":"洪勒拜克","country":"丹麦","visa":"需提前办理签证（申根签）"},{"rank":310,"en":"Zambezi","cn":"赞比西河","loc":"赞比西河","country":"赞比亚、津巴布韦","visa":"免签；落地签"},{"rank":311,"en":"Temppeliaukion Kirkko","cn":"赫尔辛基岩石教堂","loc":"赫尔辛基岩石教堂","country":"芬兰","visa":"需提前办理签证（申根签）"},{"rank":312,"en":"Petronas Towers Kuala Lampur","cn":"吉隆坡双子塔","loc":"吉隆坡双子塔","country":"马来西亚","visa":"免签"},{"rank":313,"en":"Ancient Maya City and Protected Tropical Forests of Calakmul, Campeche","cn":"卡拉克穆尔","loc":"坎佩切州卡拉克穆尔","country":"墨西哥","visa":"需提前办理签证"},{"rank":314,"en":"Murchison Falls","cn":"默奇森瀑布","loc":"默奇森瀑布","country":"乌干达","visa":"落地签"},{"rank":315,"en":"Caernarfon","cn":"卡那封","loc":"卡那封，威尔士","country":"英国","visa":"需提前办理签证"},{"rank":316,"en":"Ben Nevis","cn":"本尼维斯山","loc":"本尼维斯山，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":317,"en":"Chitwan National Park","cn":"奇特旺国家公园","loc":"奇特旺","country":"尼泊尔","visa":"落地签"},{"rank":318,"en":"Museo Guggenheim Bilbao","cn":"毕尔巴鄂古根海姆博物馆","loc":"毕尔巴鄂古根海姆博物馆","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":319,"en":"Pulpit Rock","cn":"布道石","loc":"布道石","country":"挪威","visa":"需提前办理签证（申根签）"},{"rank":320,"en":"Bay of Fundy","cn":"芬迪湾","loc":"芬迪湾","country":"加拿大","visa":"需提前办理签证"},{"rank":321,"en":"British Virgin Islands \"Other Islands\"","cn":"英属维尔京群岛","loc":"英属维尔京群岛","country":"英国（海外领地）","visa":"需提前办理签证"},{"rank":322,"en":"Sheikh Zayed Grand Mosque","cn":"谢赫扎耶德大清真寺","loc":"阿布扎比谢赫扎耶德大清真寺","country":"阿联酋","visa":"免签"},{"rank":323,"en":"Cape Cod","cn":"科德角","loc":"马萨诸塞州科德角","country":"美国","visa":"需提前办理签证"},{"rank":324,"en":"Ometepe Island","cn":"奥梅特佩岛","loc":"奥梅特佩岛","country":"尼加拉瓜","visa":"需提前办理签证"},{"rank":325,"en":"Wat Pho, Bangkok","cn":"卧佛寺","loc":"曼谷卧佛寺","country":"泰国","visa":"免签"},{"rank":326,"en":"Golden Temple","cn":"阿姆利则金庙","loc":"阿姆利则金庙，旁遮普邦","country":"印度","visa":"电子签"},{"rank":327,"en":"Kalahari Desert","cn":"卡拉哈里沙漠","loc":"卡拉哈里沙漠","country":"博茨瓦纳、纳米比亚、南非","visa":"电子签；落地签；需提前办理签证"},{"rank":328,"en":"Bet Shean","cn":"贝特谢安","loc":"贝特谢安","country":"以色列","visa":"需提前办理签证"},{"rank":329,"en":"Majorelle Gardens","cn":"马若雷勒花园","loc":"马拉喀什马若雷勒花园","country":"摩洛哥","visa":"免签"},{"rank":330,"en":"Bioluminescent Lake, Australia","cn":"荧光湖","loc":"杰维斯湾（荧光海滩）","country":"澳大利亚","visa":"需提前办理签证"},{"rank":331,"en":"Tian Tan Buddha","cn":"天坛大佛","loc":"香港大屿山天坛大佛","country":"中国","visa":"不适用（国内）"},{"rank":332,"en":"Machtesh Ramon - Ramon Crater","cn":"拉蒙坑","loc":"内盖夫拉蒙坑","country":"以色列","visa":"需提前办理签证"},{"rank":333,"en":"Lascaux Caves","cn":"拉斯科洞窟","loc":"多尔多涅省拉斯科洞窟","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":334,"en":"Jokhang Temple Lhasa","cn":"大昭寺","loc":"拉萨大昭寺，西藏","country":"中国","visa":"不适用（国内）"},{"rank":335,"en":"Genocide Memorial, Kigali","cn":"基加利种族灭绝纪念馆","loc":"基加利种族灭绝纪念馆","country":"卢旺达","visa":"落地签"},{"rank":336,"en":"Bairro Alfama, Lisbon","cn":"阿法玛区","loc":"里斯本阿法玛区","country":"葡萄牙","visa":"需提前办理签证（申根签）"},{"rank":337,"en":"Museo Del Oro Del Banco De La República","cn":"波哥大黄金博物馆","loc":"波哥大黄金博物馆","country":"哥伦比亚","visa":"需提前办理签证"},{"rank":338,"en":"MQ – Museumsquartier Wien","cn":"维也纳博物馆区","loc":"维也纳博物馆区","country":"奥地利","visa":"需提前办理签证（申根签）"},{"rank":339,"en":"798 Art District, Beijing","cn":"798艺术区","loc":"北京798艺术区","country":"中国","visa":"不适用（国内）"},{"rank":340,"en":"D-Day Beaches","cn":"诺曼底登陆海滩","loc":"诺曼底登陆海滩","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":341,"en":"Bialowieza National Park","cn":"比亚沃维耶扎原始森林","loc":"比亚沃维耶扎","country":"波兰、白俄罗斯","visa":"需提前办理签证（申根签）；免签"},{"rank":342,"en":"N Seoul Tower","cn":"N首尔塔","loc":"首尔N首尔塔","country":"韩国","visa":"需提前办理签证"},{"rank":343,"en":"Lake Manasarovar","cn":"玛旁雍错","loc":"玛旁雍错，西藏","country":"中国","visa":"不适用（国内）"},{"rank":344,"en":"Grossglockner Hochalpenstrasse","cn":"大格洛克纳高山公路","loc":"大格洛克纳高山公路","country":"奥地利","visa":"需提前办理签证（申根签）"},{"rank":345,"en":"Pelourinho","cn":"佩洛里尼奥","loc":"萨尔瓦多佩洛里尼奥，巴伊亚州","country":"巴西","visa":"需提前办理签证"},{"rank":346,"en":"Jasper National Park","cn":"贾斯珀国家公园","loc":"阿尔伯塔省贾斯珀","country":"加拿大","visa":"需提前办理签证"},{"rank":347,"en":"Casino Monte Carlo","cn":"蒙特卡洛赌场","loc":"蒙特卡洛赌场","country":"摩纳哥","visa":"需提前办理签证（申根签）"},{"rank":348,"en":"Fort and Shalimar Gardens, Lahore","cn":"拉合尔古堡与夏利玛花园","loc":"拉合尔古堡与夏利玛花园","country":"巴基斯坦","visa":"免签"},{"rank":349,"en":"Ishak Pasa Sarayi","cn":"伊沙克帕夏宫","loc":"阿勒省伊沙克帕夏宫","country":"土耳其","visa":"电子签"},{"rank":350,"en":"Moorea","cn":"莫雷阿岛","loc":"莫雷阿岛","country":"法属波利尼西亚（法国）","visa":"需提前办理签证（法国签证）"},{"rank":351,"en":"Snaefellsnes","cn":"斯奈菲尔斯半岛","loc":"斯奈菲尔斯半岛","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":352,"en":"Himeji-Jo","cn":"姬路城","loc":"兵库县姬路城","country":"日本","visa":"需提前办理签证"},{"rank":353,"en":"Sedlec Ossuary","cn":"人骨教堂","loc":"库特纳霍拉人骨教堂","country":"捷克","visa":"需提前办理签证（申根签）"},{"rank":354,"en":"Fatehpur Sikri","cn":"法泰赫普尔西克里","loc":"法泰赫普尔西克里，北方邦","country":"印度","visa":"电子签"},{"rank":355,"en":"Blyde River Canyon","cn":"布莱德河峡谷","loc":"姆普马兰加省布莱德河峡谷","country":"南非","visa":"需提前办理签证"},{"rank":356,"en":"Persepolis","cn":"波斯波利斯","loc":"法尔斯省波斯波利斯","country":"伊朗","visa":"免签"},{"rank":357,"en":"Phang Nga Bay, Thailand","cn":"攀牙湾","loc":"攀牙湾","country":"泰国","visa":"免签"},{"rank":358,"en":"Great Geysir","cn":"大间歇泉","loc":"大间歇泉","country":"冰岛","visa":"需提前办理签证（申根签）"},{"rank":359,"en":"Lake Malawi National Park","cn":"马拉维湖","loc":"马拉维湖","country":"马拉维","visa":"落地签"},{"rank":360,"en":"Teatre-Museu Dalí","cn":"达利博物馆","loc":"菲格雷斯达利博物馆","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":361,"en":"Karlstejn Castle","cn":"卡尔施泰因城堡","loc":"卡尔施泰因城堡","country":"捷克","visa":"需提前办理签证（申根签）"},{"rank":362,"en":"Danube Delta","cn":"多瑙河三角洲","loc":"多瑙河三角洲","country":"罗马尼亚、乌克兰","visa":"需提前办理签证（申根签）；电子签"},{"rank":363,"en":"Blue Ridge Parkway","cn":"蓝岭公路","loc":"弗吉尼亚/北卡罗来纳州","country":"美国","visa":"需提前办理签证"},{"rank":364,"en":"Brecon Beacons","cn":"布雷肯比肯斯","loc":"布雷肯比肯斯，威尔士","country":"英国","visa":"需提前办理签证"},{"rank":365,"en":"Kalemegdan - Kališ","cn":"卡莱梅格丹","loc":"贝尔格莱德卡莱梅格丹","country":"塞尔维亚","visa":"免签"},{"rank":366,"en":"Punakha Dzong","cn":"普那卡宗","loc":"普那卡宗","country":"不丹","visa":"电子签（须通过旅行社）"},{"rank":367,"en":"Glover´S Reef","cn":"格洛弗礁","loc":"格洛弗礁","country":"伯利兹","visa":"需提前办理签证"},{"rank":368,"en":"Encontro Das Aguas","cn":"黑白河交汇","loc":"马瑙斯黑白河交汇","country":"巴西","visa":"需提前办理签证"},{"rank":369,"en":"Baalbek","cn":"巴勒贝克","loc":"巴勒贝克","country":"黎巴嫩","visa":"落地签"},{"rank":370,"en":"Museu Picasso - Barcelona","cn":"毕加索博物馆","loc":"巴塞罗那毕加索博物馆","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":371,"en":"Mosteiro Dos Jerónimos","cn":"热罗尼莫斯修道院","loc":"里斯本热罗尼莫斯修道院","country":"葡萄牙","visa":"需提前办理签证（申根签）"},{"rank":372,"en":"Tintern Abbey","cn":"丁登寺","loc":"丁登寺，威尔士","country":"英国","visa":"需提前办理签证"},{"rank":373,"en":"Toshogu Shrine","cn":"日光东照宫","loc":"日光东照宫","country":"日本","visa":"需提前办理签证"},{"rank":374,"en":"Pamukkale","cn":"棉花堡","loc":"代尼兹利省棉花堡","country":"土耳其","visa":"电子签"},{"rank":375,"en":"Historical Complex of Split With the Palace of Diocletian","cn":"戴克里先宫","loc":"斯普利特戴克里先宫","country":"克罗地亚","visa":"需提前办理签证（申根签）"},{"rank":376,"en":"Ruta De Las Flores","cn":"花之谷","loc":"花之谷","country":"萨尔瓦多","visa":"需提前办理签证"},{"rank":377,"en":"Cliffs of Moher","cn":"莫赫悬崖","loc":"克莱尔郡莫赫悬崖","country":"爱尔兰","visa":"需提前办理签证"},{"rank":378,"en":"Isla Del Sol","cn":"太阳岛","loc":"的的喀喀湖太阳岛","country":"玻利维亚","visa":"落地签"},{"rank":379,"en":"Trinidad","cn":"特立尼达","loc":"特立尼达","country":"古巴","visa":"免签"},{"rank":380,"en":"Lençóis Maranhenses","cn":"伦索伊斯·马拉赫塞斯","loc":"马拉尼昂州","country":"巴西","visa":"需提前办理签证"},{"rank":381,"en":"Ancient City of Polonnaruwa","cn":"波隆纳鲁沃古城","loc":"波隆纳鲁沃古城","country":"斯里兰卡","visa":"电子签"},{"rank":382,"en":"Santiago De Compostela","cn":"圣地亚哥-德孔波斯特拉","loc":"加利西亚圣地亚哥","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":383,"en":"Komodo Island","cn":"科莫多岛","loc":"科莫多岛","country":"印度尼西亚","visa":"落地签"},{"rank":384,"en":"Kelvingrove Art Gallery & Museum","cn":"凯文葛罗夫美术馆","loc":"格拉斯哥，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":385,"en":"Copan","cn":"科潘遗址","loc":"科潘","country":"洪都拉斯","visa":"需提前办理签证"},{"rank":386,"en":"Hill of Crosses","cn":"十字架山","loc":"希奥利艾十字架山","country":"立陶宛","visa":"需提前办理签证（申根签）"},{"rank":387,"en":"Wolf's Lair","cn":"狼穴","loc":"狼穴","country":"波兰","visa":"需提前办理签证（申根签）"},{"rank":388,"en":"Cartagena","cn":"卡塔赫纳","loc":"卡塔赫纳","country":"哥伦比亚","visa":"需提前办理签证"},{"rank":389,"en":"Tsarskoye Selo (Catherine Palace), St Petersburg","cn":"叶卡捷琳娜宫","loc":"圣彼得堡叶卡捷琳娜宫","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":390,"en":"Mt. Rushmore","cn":"总统山","loc":"南达科他州总统山","country":"美国","visa":"需提前办理签证"},{"rank":391,"en":"Butrint, Sarande","cn":"布特林特","loc":"萨兰达布特林特","country":"阿尔巴尼亚","visa":"免签"},{"rank":392,"en":"Burgess Shale, BC","cn":"伯吉斯页岩","loc":"不列颠哥伦比亚省伯吉斯页岩","country":"加拿大","visa":"需提前办理签证"},{"rank":393,"en":"Loch Lomond","cn":"罗蒙湖","loc":"苏格兰罗蒙湖","country":"英国","visa":"需提前办理签证"},{"rank":394,"en":"Blue Hole","cn":"大蓝洞","loc":"大蓝洞","country":"伯利兹","visa":"需提前办理签证"},{"rank":395,"en":"Visiting Tiger's Nest, Bhutan","cn":"虎穴寺","loc":"帕罗虎穴寺","country":"不丹","visa":"电子签（须通过旅行社）"},{"rank":396,"en":"Hadrian's Wall","cn":"哈德良长城","loc":"哈德良长城，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":397,"en":"Galle Fort","cn":"加勒古堡","loc":"加勒古堡","country":"斯里兰卡","visa":"电子签"},{"rank":398,"en":"Zimbabwe","cn":"大津巴布韦遗址","loc":"大津巴布韦遗址，马辛戈","country":"津巴布韦","visa":"落地签"},{"rank":399,"en":"Swayambhunath Stupa, Kathmandu","cn":"斯瓦扬布佛塔","loc":"加德满都斯瓦扬布佛塔","country":"尼泊尔","visa":"落地签"},{"rank":400,"en":"Killing Fields, Phnom Penh","cn":"钟屋杀戮场","loc":"金边钟屋杀戮场","country":"柬埔寨","visa":"免签（试行至2026-10-15，14天）"},{"rank":401,"en":"Callanish Standing Stones, Lewis, Scotland","cn":"卡拉尼什巨石","loc":"刘易斯岛卡拉尼什巨石","country":"英国","visa":"需提前办理签证"},{"rank":402,"en":"Avebury","cn":"埃夫伯里","loc":"威尔特郡，英格兰","country":"英国","visa":"需提前办理签证"},{"rank":403,"en":"Caracol Maya City","cn":"卡拉科尔","loc":"卡拉科尔玛雅古城","country":"伯利兹","visa":"需提前办理签证"},{"rank":404,"en":"Malbork Castle","cn":"马尔堡城堡","loc":"马尔堡城堡","country":"波兰","visa":"需提前办理签证（申根签）"},{"rank":405,"en":"Visiting the Tooth Temple in Kandy","cn":"佛牙寺","loc":"康提佛牙寺","country":"斯里兰卡","visa":"电子签"},{"rank":406,"en":"La Boca, Buenos Aires","cn":"博卡区","loc":"布宜诺斯艾利斯博卡区","country":"阿根廷","visa":"需提前办理签证"},{"rank":407,"en":"Heydar Aliyev Cultural Centre","cn":"盖达尔·阿利耶夫文化中心","loc":"巴库盖达尔·阿利耶夫文化中心","country":"阿塞拜疆","visa":"免签"},{"rank":408,"en":"Sunday Market, Kashgar","cn":"喀什大巴扎","loc":"喀什周日大巴扎，新疆","country":"中国","visa":"不适用（国内）"},{"rank":409,"en":"Bardo Museum, Tunis","cn":"巴尔杜博物馆","loc":"突尼斯巴尔杜博物馆","country":"突尼斯","visa":"需提前办理签证"},{"rank":410,"en":"Salzwelten","cn":"哈尔施塔特盐矿","loc":"哈尔施塔特盐矿","country":"奥地利","visa":"需提前办理签证（申根签）"},{"rank":411,"en":"Khao Sok National Park","cn":"考索国家公园","loc":"素叻他尼府考索","country":"泰国","visa":"免签"},{"rank":412,"en":"Mansudae Grand Monument","cn":"万寿台大纪念碑","loc":"平壤万寿台","country":"朝鲜","visa":"需提前办理签证（须跟团）"},{"rank":413,"en":"Etosha National Park","cn":"埃托沙国家公园","loc":"埃托沙","country":"纳米比亚","visa":"落地签"},{"rank":414,"en":"Port Arthur","cn":"亚瑟港","loc":"塔斯马尼亚亚瑟港","country":"澳大利亚","visa":"需提前办理签证"},{"rank":415,"en":"Jungfraujoch - Top of Europe","cn":"少女峰","loc":"少女峰","country":"瑞士","visa":"需提前办理签证（申根签）"},{"rank":416,"en":"Phu Quoc Island","cn":"富国岛","loc":"富国岛","country":"越南","visa":"电子签"},{"rank":417,"en":"Melk","cn":"梅尔克修道院","loc":"梅尔克（瓦豪）","country":"奥地利","visa":"需提前办理签证（申根签）"},{"rank":418,"en":"The Nazca Lines","cn":"纳斯卡线条","loc":"纳斯卡线条","country":"秘鲁","visa":"需提前办理签证"},{"rank":419,"en":"Recoleta","cn":"雷科莱塔公墓","loc":"布宜诺斯艾利斯雷科莱塔公墓","country":"阿根廷","visa":"需提前办理签证"},{"rank":420,"en":"Altun Ha, Maya Site","cn":"阿特恩哈玛雅遗址","loc":"阿特恩哈玛雅遗址","country":"伯利兹","visa":"需提前办理签证"},{"rank":421,"en":"Khongoryn Els","cn":"洪戈林沙丘","loc":"戈壁洪戈林沙丘","country":"蒙古","visa":"电子签"},{"rank":422,"en":"Belfast","cn":"贝尔法斯特","loc":"贝尔法斯特，北爱尔兰","country":"英国","visa":"需提前办理签证"},{"rank":423,"en":"Zwinger","cn":"茨温格宫","loc":"德累斯顿茨温格宫","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":424,"en":"Skeleton Coast","cn":"骷髅海岸","loc":"骷髅海岸","country":"纳米比亚","visa":"落地签"},{"rank":425,"en":"Iona","cn":"艾奥纳岛","loc":"艾奥纳岛，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":426,"en":"Stirling","cn":"斯特灵","loc":"斯特灵，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":427,"en":"Zocalo, Mexico City","cn":"宪法广场","loc":"墨西哥城宪法广场","country":"墨西哥","visa":"需提前办理签证"},{"rank":428,"en":"Nyungwe Forest National Park","cn":"纽恩威森林国家公园","loc":"纽恩威森林","country":"卢旺达","visa":"落地签"},{"rank":429,"en":"Sain Fagan: Amgueddfa Werin Cymru - St Fagans: National History Museum","cn":"圣法根民俗博物馆","loc":"卡迪夫圣法根民俗博物馆，威尔士","country":"英国","visa":"需提前办理签证"},{"rank":430,"en":"Eisriesenwelt","cn":"艾斯瑞森维特冰洞","loc":"萨尔茨堡艾斯瑞森维特冰洞","country":"奥地利","visa":"需提前办理签证（申根签）"},{"rank":431,"en":"Paphos","cn":"帕福斯","loc":"帕福斯","country":"塞浦路斯","visa":"需提前办理签证"},{"rank":432,"en":"Lavena Coastal Walk","cn":"拉维纳海岸步道","loc":"塔韦乌尼拉维纳海岸步道","country":"斐济","visa":"免签"},{"rank":433,"en":"Brandenburg Gate, Berlin","cn":"勃兰登堡门","loc":"柏林勃兰登堡门","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":434,"en":"Amboseli Nationa Park","cn":"安博塞利国家公园","loc":"安博塞利","country":"肯尼亚","visa":"电子签"},{"rank":435,"en":"Banaue Rice Terraces","cn":"巴拿威梯田","loc":"巴拿威梯田","country":"菲律宾","visa":"需提前办理签证"},{"rank":436,"en":"Carpathian Forest","cn":"喀尔巴阡山","loc":"喀尔巴阡山","country":"罗马尼亚","visa":"需提前办理签证（申根签）"},{"rank":437,"en":"Segovia","cn":"塞哥维亚","loc":"塞哥维亚","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":438,"en":"Ipanema","cn":"伊帕内玛","loc":"里约热内卢伊帕内玛","country":"巴西","visa":"需提前办理签证"},{"rank":439,"en":"Matmata and Tataouine","cn":"马特马塔与塔塔维纳","loc":"马特马塔/塔塔维纳","country":"突尼斯","visa":"需提前办理签证"},{"rank":440,"en":"Everglades National Park, Florida","cn":"大沼泽地国家公园","loc":"佛罗里达州大沼泽地","country":"美国","visa":"需提前办理签证"},{"rank":441,"en":"Lake Kinneret (Sea of Galilee)","cn":"加利利海","loc":"加利利海","country":"以色列","visa":"需提前办理签证"},{"rank":442,"en":"Monastery of Ostrog","cn":"奥斯特罗格修道院","loc":"奥斯特罗格修道院","country":"黑山","visa":"有条件免签至2026-10-31；之后需提前办理签证"},{"rank":443,"en":"Mill Complex at Kinderdijk","cn":"小孩堤防风车群","loc":"小孩堤防风车群","country":"荷兰","visa":"需提前办理签证（申根签）"},{"rank":444,"en":"Sveti Jovan Kaneo","cn":"奥赫里德圣约万教堂","loc":"奥赫里德圣约万教堂","country":"北马其顿","visa":"需提前办理签证（持有效申根/美/加/英多次签可免签15天）"},{"rank":445,"en":"Hal Saflieni Hypogeum","cn":"哈尔萨夫利尼地下宫殿","loc":"哈尔萨夫利尼地下宫殿","country":"马耳他","visa":"需提前办理签证（申根签）"},{"rank":446,"en":"Taipei","cn":"台北","loc":"台北","country":"中国台湾","visa":"需提前办理通行证及签注"},{"rank":447,"en":"Mekong Delta","cn":"湄公河三角洲","loc":"湄公河三角洲","country":"越南","visa":"电子签"},{"rank":448,"en":"Church of Our Savior on Spilled Blood, St. Petersburg","cn":"滴血大教堂","loc":"圣彼得堡滴血大教堂","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":449,"en":"San Blas Islands","cn":"圣布拉斯群岛","loc":"圣布拉斯群岛","country":"巴拿马","visa":"需提前办理签证"},{"rank":450,"en":"Pechersk Lavra","cn":"基辅洞窟修道院","loc":"基辅洞窟修道院","country":"乌克兰","visa":"电子签"},{"rank":451,"en":"Worlds End","cn":"世界尽头","loc":"霍顿平原世界尽头","country":"斯里兰卡","visa":"电子签"},{"rank":452,"en":"Roraima","cn":"罗赖马山","loc":"罗赖马山","country":"委内瑞拉、巴西、圭亚那","visa":"需提前办理签证"},{"rank":453,"en":"Nizwa","cn":"尼兹瓦","loc":"尼兹瓦","country":"阿曼","visa":"免签"},{"rank":454,"en":"Bucovina","cn":"布科维纳彩绘修道院","loc":"布科维纳彩绘修道院","country":"罗马尼亚","visa":"需提前办理签证（申根签）"},{"rank":455,"en":"L'anse Aux Meadows","cn":"兰塞奥兹牧草地","loc":"纽芬兰兰塞奥兹牧草地","country":"加拿大","visa":"需提前办理签证"},{"rank":456,"en":"Black Forest","cn":"黑森林","loc":"黑森林","country":"德国","visa":"需提前办理签证（申根签）"},{"rank":457,"en":"Mt.Fuji","cn":"富士山","loc":"富士山","country":"日本","visa":"需提前办理签证"},{"rank":458,"en":"Reunion Island","cn":"留尼汪岛","loc":"留尼汪岛","country":"法国（海外省）","visa":"需提前办理签证（申根签）"},{"rank":459,"en":"Mt. Kenya Wildlife Conservancy","cn":"肯尼亚山野生动物保护区","loc":"肯尼亚山野生动物保护区","country":"肯尼亚","visa":"电子签"},{"rank":460,"en":"Minaret and Archaeological Remains of Jam","cn":"贾姆宣礼塔","loc":"贾姆宣礼塔","country":"阿富汗","visa":"需提前办理签证"},{"rank":461,"en":"Trakai Castle","cn":"特拉凯城堡","loc":"特拉凯城堡","country":"立陶宛","visa":"需提前办理签证（申根签）"},{"rank":462,"en":"Amphitheatre of El Jem","cn":"杰姆斗兽场","loc":"杰姆斗兽场","country":"突尼斯","visa":"需提前办理签证"},{"rank":463,"en":"Schilthorn","cn":"雪朗峰","loc":"雪朗峰","country":"瑞士","visa":"需提前办理签证（申根签）"},{"rank":464,"en":"Griffith Observatory","cn":"格里菲斯天文台","loc":"洛杉矶格里菲斯天文台","country":"美国","visa":"需提前办理签证"},{"rank":465,"en":"Tower of London","cn":"伦敦塔","loc":"伦敦塔","country":"英国","visa":"需提前办理签证"},{"rank":466,"en":"Trinity College","cn":"都柏林圣三一学院","loc":"都柏林圣三一学院","country":"爱尔兰","visa":"需提前办理签证"},{"rank":467,"en":"Luxembourg","cn":"卢森堡","loc":"卢森堡","country":"卢森堡","visa":"需提前办理签证（申根签）"},{"rank":468,"en":"Camp Nou","cn":"诺坎普球场","loc":"巴塞罗那诺坎普球场","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":469,"en":"Panama Canal","cn":"巴拿马运河","loc":"巴拿马运河","country":"巴拿马","visa":"需提前办理签证"},{"rank":470,"en":"Bay Islands","cn":"洪都拉斯海湾群岛","loc":"海湾群岛","country":"洪都拉斯","visa":"需提前办理签证"},{"rank":471,"en":"Giverny","cn":"莫奈花园","loc":"诺曼底吉维尼莫奈花园","country":"法国","visa":"需提前办理签证（申根签）"},{"rank":472,"en":"Grouse Mountain","cn":"松鸡山","loc":"温哥华松鸡山","country":"加拿大","visa":"需提前办理签证"},{"rank":473,"en":"Graceland","cn":"猫王故居","loc":"孟菲斯猫王故居，田纳西州","country":"美国","visa":"需提前办理签证"},{"rank":474,"en":"Samoa","cn":"萨摩亚","loc":"萨摩亚","country":"萨摩亚","visa":"免签"},{"rank":475,"en":"Plaza Mayor","cn":"马德里主广场","loc":"马德里主广场","country":"西班牙","visa":"需提前办理签证（申根签）"},{"rank":476,"en":"Flanders Fields","cn":"弗兰德斯战场","loc":"弗兰德斯战场","country":"比利时","visa":"需提前办理签证（申根签）"},{"rank":477,"en":"Pol-E Khaju","cn":"哈柱桥","loc":"伊斯法罕哈柱桥","country":"伊朗","visa":"免签"},{"rank":478,"en":"Sanduny Baths","cn":"桑杜内浴室","loc":"莫斯科桑杜内浴室","country":"俄罗斯","visa":"电子签（临时免签已于2026-09-14到期）"},{"rank":479,"en":"Canon Del Colca","cn":"科尔卡峡谷","loc":"科尔卡峡谷","country":"秘鲁","visa":"需提前办理签证"},{"rank":480,"en":"Spis Castle","cn":"斯皮什城堡","loc":"斯皮什城堡","country":"斯洛伐克","visa":"需提前办理签证（申根签）"},{"rank":481,"en":"Glacier of Aletsch","cn":"阿莱奇冰川","loc":"阿莱奇冰川","country":"瑞士","visa":"需提前办理签证（申根签）"},{"rank":482,"en":"Ararat","cn":"亚拉腊山","loc":"亚拉腊山","country":"土耳其","visa":"电子签"},{"rank":483,"en":"Stingray City, Grand Cayman","cn":"黄貂鱼城","loc":"大开曼岛黄貂鱼城","country":"开曼群岛（英国）","visa":"需提前办理签证"},{"rank":484,"en":"Foteviken Viking","cn":"福特维肯维京遗址","loc":"斯科讷福特维肯维京遗址","country":"瑞典","visa":"需提前办理签证（申根签）"},{"rank":485,"en":"Wawel Hill, Kraków","cn":"瓦维尔山","loc":"克拉科夫瓦维尔山","country":"波兰","visa":"需提前办理签证（申根签）"},{"rank":486,"en":"Tigray Churches","cn":"提格雷岩石教堂","loc":"提格雷岩石教堂","country":"埃塞俄比亚","visa":"落地签"},{"rank":487,"en":"Isla Mujeres","cn":"女人岛","loc":"金塔纳罗奥州女人岛","country":"墨西哥","visa":"需提前办理签证"},{"rank":488,"en":"Fingals Cave","cn":"芬格尔洞","loc":"斯塔法岛芬格尔洞，苏格兰","country":"英国","visa":"需提前办理签证"},{"rank":489,"en":"Pisa","cn":"比萨斜塔","loc":"比萨（斜塔），托斯卡纳","country":"意大利","visa":"需提前办理签证（申根签）"},{"rank":490,"en":"Centrul Vechi","cn":"布加勒斯特老城","loc":"布加勒斯特老城","country":"罗马尼亚","visa":"需提前办理签证（申根签）"},{"rank":491,"en":"Monaco","cn":"摩纳哥","loc":"摩纳哥","country":"摩纳哥","visa":"需提前办理签证（申根签）"},{"rank":492,"en":"Oslo Opera House","cn":"奥斯陆歌剧院","loc":"奥斯陆歌剧院","country":"挪威","visa":"需提前办理签证（申根签）"},{"rank":493,"en":"Kolmanskop","cn":"科尔曼斯科普鬼镇","loc":"科尔曼斯科普鬼镇","country":"纳米比亚","visa":"落地签"},{"rank":494,"en":"Mutrah Souq","cn":"马特拉市场","loc":"马斯喀特马特拉市场","country":"阿曼","visa":"免签"},{"rank":495,"en":"Rock of Cashel","cn":"卡舍尔石","loc":"卡舍尔石","country":"爱尔兰","visa":"需提前办理签证"},{"rank":496,"en":"Erdene Zuu Monastery","cn":"额尔德尼召","loc":"哈尔和林额尔德尼召","country":"蒙古","visa":"电子签"},{"rank":497,"en":"Grand Palace, Bangkok","cn":"曼谷大皇宫","loc":"曼谷大皇宫","country":"泰国","visa":"免签"},{"rank":498,"en":"Independence National Historical Park","cn":"费城独立国家历史公园","loc":"费城独立国家历史公园","country":"美国","visa":"需提前办理签证"}];
+    const FEATURES = [
+      {rank:1,cn:'吴哥窟',en:'Angkor Wat',place:'暹粒 · 柬埔寨',src:'assets/features/1.jpg',source:'https://www.holamon.cat/en/node/134'},
+      {rank:2,cn:'大堡礁',en:'Great Barrier Reef',place:'昆士兰州 · 澳大利亚',src:'assets/features/2.jpg',source:'https://mahabahu.com/climate-change-threatens-the-survival-of-the-great-barrier-reef/'},
+      {rank:3,cn:'马丘比丘',en:'Machu Picchu',place:'库斯科大区 · 秘鲁',src:'assets/features/3.jpg',source:'https://www.holamon.cat/en/huayna-picchu'},
+      {rank:4,cn:'万里长城',en:'Great Wall of China',place:'中国北方多省 · 中国',src:'assets/features/4.jpg',source:'https://www.voyage-prive.be/aanbiedingen/last-minute-china.html'},
+      {rank:5,cn:'泰姬陵',en:'Taj Mahal',place:'阿格拉 · 印度',src:'assets/features/5.jpg',source:'https://www.holamon.cat/ca/taj-mahal'},
+      {rank:6,cn:'科罗拉多大峡谷',en:'Grand Canyon',place:'亚利桑那州 · 美国',src:'assets/features/6.jpg',source:'http://show.pictures/by/antoine-taveneaux'},
+      {rank:7,cn:'罗马斗兽场',en:'Colosseum',place:'罗马 · 意大利',src:'assets/features/7.jpg',source:'https://uk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BB%D1%96%D0%B7%D0%B5%D0%B9'},
+      {rank:8,cn:'伊瓜苏瀑布',en:'Iguazu Falls',place:'阿根廷 / 巴西边境',src:'assets/features/8.jpg',source:'http://www.holamon.cat/hi/iguazu-falls'},
+      {rank:9,cn:'阿尔罕布拉宫',en:'Alhambra',place:'格拉纳达 · 西班牙',src:'assets/features/9.jpg',source:'https://commons.wikimedia.org/wiki/Alhambra?uselang=pt'},
+      {rank:10,cn:'圣索菲亚大教堂',en:'Hagia Sophia',place:'伊斯坦布尔 · 土耳其',src:'assets/features/10.jpg',source:'https://audiala.com/cs/turecko/istanbul/hagia-sofia'},
+      {rank:11,cn:'非斯老城',en:'Medina of Fez',place:'非斯 · 摩洛哥',src:'assets/features/11.jpg',source:'https://www.minube.it/ostelli-fez-c2114'},
+      {rank:12,cn:'十二门徒石',en:'Twelve Apostles',place:'大洋路 · 澳大利亚',src:'assets/features/12.jpg',source:'https://mapcarta.com/29501042'}
+    ];
+
+    const featureGallery = document.getElementById('featureGallery');
+    const featureMore = document.getElementById('featureMore');
+    featureGallery.innerHTML = FEATURES.slice(0,3).map((d,i)=>`
+      <article class="feature">
+        <img src="${d.src}" alt="${d.cn}，${d.place}" ${i===0?'fetchpriority="high"':''}>
+        <a class="feature-source" href="${d.source}" target="_blank" rel="noreferrer" aria-label="查看${d.cn}图片来源">图片来源</a>
+        <div class="feature-copy"><span class="rank">#${d.rank}</span><h2>${d.cn}</h2><p>${d.en} · ${d.place}</p></div>
+      </article>`).join('');
+    featureMore.innerHTML = FEATURES.slice(3).map(d=>`
+      <article class="mini-feature"><img loading="lazy" src="${d.src}" alt="${d.cn}，${d.place}"><span>#${d.rank} ${d.cn}</span></article>`).join('');
+
+    const rows = document.getElementById('rows');
+    const search = document.getElementById('search');
+    const countryFilter = document.getElementById('countryFilter');
+    const rankFilter = document.getElementById('rankFilter');
+    const resultCount = document.getElementById('resultCount');
+    const filterSummary = document.getElementById('filterSummary');
+    const resetFilters = document.getElementById('resetFilters');
+    let visaFilter = '';
+
+    const countries = [...new Set(DATA.map(d=>d.country))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+    countries.forEach(c=>countryFilter.add(new Option(c,c)));
+    document.getElementById('countryStat').textContent = countries.length;
+    document.getElementById('easyStat').textContent = DATA.filter(d=>/免签|落地签|电子签/.test(d.visa)).length;
+
+    function visaGroup(v){
+      if(v.includes('免签') && !v.includes('取消')) return '免签';
+      if(v.includes('落地签')) return '落地签';
+      if(v.includes('电子签')) return '电子签';
+      if(v.includes('需提前')) return '需提前';
+      return '其他';
+    }
+    function visaClass(v){
+      const g=visaGroup(v);
+      return g==='免签'?'visa-free':g==='落地签'?'visa-arrival':g==='电子签'?'visa-evisa':g==='需提前'?'visa-before':'visa-other';
+    }
+    function matchRank(rank,range){
+      if(!range) return true;
+      const [a,b]=range.split('-').map(Number);
+      return rank>=a && rank<=b;
+    }
+    function escapeHtml(value){
+      return String(value).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+    }
+    const FEATURED_REASONS={
+      1:'高棉建筑的宏大尺度、精密浮雕与丛林晨光，共同造就无可替代的文明现场。',
+      2:'全球规模最大的珊瑚礁系统，把绚烂海洋生态与壮阔航行体验集中在一处。',
+      3:'云雾山巅的印加石城将工程智慧、神秘历史与安第斯景观融为一体。',
+      4:'绵延山岭的防御工程以惊人尺度，成为中国古代文明最醒目的地景符号。',
+      5:'对称园林、白色大理石与细腻镶嵌，让这座陵墓成为莫卧儿建筑的极致表达。',
+      6:'科罗拉多河切开的层叠岩壁，以亿万年地质史和巨大空间感震撼来访者。',
+      7:'恢宏看台与地下结构让古罗马的公共生活、工程技术和权力想象清晰可见。',
+      8:'跨越国境的巨大水幕、轰鸣声与雨林环境，构成极具冲击力的自然奇观。',
+      9:'宫殿、庭院、水景与繁复纹饰，完整呈现安达卢西亚伊斯兰艺术的精华。',
+      10:'拜占庭穹顶、马赛克与奥斯曼时代遗存并置，浓缩了伊斯坦布尔的文明交汇。',
+      11:'层层巷道、手工作坊与古老宗教建筑，让中世纪北非城市肌理至今仍可步入。',
+      12:'海蚀巨柱沿大洋路列阵，展现南大洋持续雕刻海岸的磅礴力量。',
+      13:'纳巴泰人在玫瑰色峡谷中凿出的城市，把建筑奇迹与沙漠探险融为一体。',
+      14:'雨林之上的玛雅神庙与广场，展现古代中美洲城市文明的规模与想象力。',
+      15:'跨越世界文明的顶级馆藏，让人能在一座建筑里纵览数千年人类创造。',
+      16:'高迪以仿生结构、彩光和彩色立面，把一座教堂变成持续生长的建筑诗篇。',
+      17:'深邃峡湾、瀑布与原始山林共同构成新西兰最具史诗感的荒野景观。',
+      18:'火山海湾、白色聚落与爱琴海落日，形成辨识度极高的岛屿风景。',
+      19:'隔离演化出的独特物种与火山群岛环境，使这里成为观察自然进化的经典现场。',
+      20:'大胆收藏与地下建筑打破传统美术馆体验，以挑衅性的策展方式令人难忘。'
+    };
+    function selectionReason(d){
+      if(FEATURED_REASONS[d.rank])return FEATURED_REASONS[d.rank];
+      const n=`${d.en} ${d.cn}`.toLocaleLowerCase('en');
+      const place=d.country.includes('/')?'这片跨境区域':d.country;
+      if(/reef|coral|珊瑚|marine|海洋/.test(n))return `珍贵海洋生态与水下景观兼具科学价值和沉浸式旅行体验。`;
+      if(/falls|waterfall|瀑布/.test(n))return `水流、落差与周边地貌共同制造极具声势和视觉冲击力的自然现场。`;
+      if(/glacier|冰川|冰河/.test(n))return `冰川塑造的蓝白景观与可见的地质运动，让荒野尺度近在眼前。`;
+      if(/volcan|crater|火山|火山口/.test(n))return `火山活动留下的地貌奇观与鲜明生态，展现地球内部力量的痕迹。`;
+      if(/canyon|gorge|峡谷|峡/.test(n))return `陡峭岩壁与深切地形记录漫长侵蚀过程，也带来震撼的空间纵深。`;
+      if(/mount|peak|山|峰|uluru|table mountain/.test(n))return `标志性山体、开阔视野与沿途变化的自然带，使抵达过程本身就值得期待。`;
+      if(/lake|lagoon|湖|潟湖/.test(n))return `水色、岸线与周围地貌相互映衬，营造宁静而层次丰富的自然画面。`;
+      if(/river|delta|canal|河|运河|三角洲/.test(n))return `水系塑造了独特景观与地方生活，也提供观察城市或自然的另一条线索。`;
+      if(/cave|cavern|grotto|洞|窟/.test(n))return `地下空间、岩层纹理与光影变化，带来与地表完全不同的探索体验。`;
+      if(/desert|dune|salt|沙漠|沙丘|盐沼/.test(n))return `极简地貌、辽阔天际与不断变化的光线，呈现罕见而纯粹的景观尺度。`;
+      if(/forest|jungle|wood|雨林|森林|林地/.test(n))return `茂密植被与丰富生物多样性，让旅行者能深入感受原生生态的生命力。`;
+      if(/island|archipelago|beach|coast|bay|cape|isle|岛|海滩|海岸|海湾|岬/.test(n))return `鲜明海岸线、岛屿生态与开阔海景，共同构成令人向往的滨海体验。`;
+      if(/national park|nature reserve|conservation|国家公园|保护区/.test(n))return `受保护的完整生态和代表性地貌，为亲近野生自然提供了难得窗口。`;
+      if(/wildlife|safari|serengeti|ngorongoro|galapagos|zoo|动物|野生/.test(n))return `高密度野生动物与原生栖息地，让观察自然关系成为旅程的核心。`;
+      if(/temple|wat|pagoda|shrine|stupa|寺|庙|塔|神社/.test(n))return `宗教建筑、仪式传统与精细装饰，共同保留了当地深厚的精神文化。`;
+      if(/cathedral|church|basilica|abbey|chapel|mosque|synagogue|教堂|清真寺|修道院|圣殿/.test(n))return `建筑艺术与延续至今的信仰传统交织，呈现跨越时代的精神与审美力量。`;
+      if(/palace|castle|château|fort|fortress|citadel|宫|城堡|要塞|堡垒/.test(n))return `宏伟空间、建筑细节与权力历史，让一个时代的政治和审美变得可触可见。`;
+      if(/wall|gate|tower|bridge|aqueduct|墙|城门|塔|桥|水道/.test(n))return `卓越工程、鲜明轮廓与城市记忆，使这座构筑物成为${place}的代表性地标。`;
+      if(/ruin|archae|ancient|pyramid|acropolis|pompeii|colosseum|遗址|古迹|金字塔|卫城|古城/.test(n))return `保存下来的遗迹与空间格局，让古代文明的技术、信仰和日常生活重新可读。`;
+      if(/museum|gallery|tate|louvre|hermitage|博物馆|美术馆|艺术馆/.test(n))return `高质量馆藏与清晰的文化叙事，让艺术、历史和思想在一次参观中彼此连接。`;
+      if(/market|bazaar|souk|市场|集市/.test(n))return `密集摊铺、地方风味与真实日常，使这里成为感受城市节奏最直接的入口。`;
+      if(/square|piazza|plaza|广场/.test(n))return `纪念性建筑与持续发生的公共生活，在这里共同塑造城市最鲜活的会客厅。`;
+      if(/old town|historic|medina|quarter|village|老城|古镇|历史中心|街区|村/.test(n))return `保存良好的街巷、建筑与生活传统，让旅行者能够步行读懂地方历史。`;
+      if(/garden|park|园林|花园|公园/.test(n))return `精心组织的植物、路径与景观视线，展现自然美感和地域园艺传统。`;
+      if(/opera|theatre|theater|concert|歌剧院|剧院|音乐厅/.test(n))return `独特建筑与表演传统相互成就，成为城市文化气质最具象的舞台。`;
+      if(/house|home|birthplace|故居|之家|宅/.test(n))return `人物故事与真实生活空间并置，为理解一段历史提供亲密而具体的视角。`;
+      if(/cemetery|memorial|battlefield|monument|墓地|纪念|战场|陵/.test(n))return `纪念空间承载重要历史与集体记忆，让参访超越观景而获得更深层的理解。`;
+      if(/rail|train|road|route|trail|walk|铁路|火车|公路|步道|路线/.test(n))return `沿途不断展开的景观与移动体验，让“如何抵达”成为目的地魅力的一部分。`;
+      if(/architecture|building|library|university|stadium|建筑|大楼|图书馆|大学|体育场/.test(n))return `鲜明设计、工程巧思与公共功能，让建筑本身成为值得专程观看的作品。`;
+      if(/art|mural|sculpture|艺术|壁画|雕塑/.test(n))return `富有辨识度的视觉创作与地方语境结合，提供理解当地文化的独特切面。`;
+      return `鲜明的地方气质、可深入探索的历史文化与独特现场感，使其成为${place}旅行体验中的代表。`;
+    }
+    DATA.forEach(d=>{d.reason=selectionReason(d)});
+    const MISSING_IMAGE_RANKS = new Set([]);
+    function destinationImage(d){
+      if(MISSING_IMAGE_RANKS.has(d.rank)) return '';
+      return `<button class="image-button" type="button" data-rank="${d.rank}" data-cn="${escapeHtml(d.cn)}" data-en="${escapeHtml(d.en)}" aria-haspopup="dialog" aria-label="放大查看${escapeHtml(d.cn)}图片"><img class="destination-image" width="160" height="102" loading="lazy" decoding="async" src="assets/destinations/${d.rank}.jpg" alt="${escapeHtml(d.cn)}，${escapeHtml(d.loc)}" onerror="this.closest('.destination-media').classList.add('image-unavailable');this.parentElement.remove()"></button>`;
+    }
+    function row(d){
+      const unavailable=MISSING_IMAGE_RANKS.has(d.rank);
+      return `<article class="destination-row" role="row">
+        <div class="rank-cell" role="cell">${d.rank}</div>
+        <div class="name-cell" role="cell"><div class="destination-media${unavailable?' image-unavailable':''}">${destinationImage(d)}<span class="image-fallback" aria-hidden="true">暂无可用图片</span><div><div class="name-cn">${escapeHtml(d.cn)}</div><div class="name-en">${escapeHtml(d.en)}</div></div></div></div>
+        <div class="reason-cell" role="cell">${escapeHtml(d.reason)}</div>
+        <div class="place" role="cell" data-country="${escapeHtml(d.country)}">${escapeHtml(d.loc)}</div>
+        <div class="country" role="cell">${escapeHtml(d.country)}</div>
+        <div class="visa-cell" role="cell"><span class="visa-badge ${visaClass(d.visa)}">${escapeHtml(d.visa)}</span></div>
+      </article>`;
+    }
+    function render(){
+      const query=search.value.trim().toLocaleLowerCase('zh-CN');
+      const country=countryFilter.value;
+      const range=rankFilter.value;
+      const filtered=DATA.filter(d=>{
+        if(query && !`${d.rank} ${d.cn} ${d.en} ${d.loc} ${d.country} ${d.reason}`.toLocaleLowerCase('zh-CN').includes(query)) return false;
+        if(country && d.country!==country) return false;
+        if(range && !matchRank(d.rank,range)) return false;
+        if(visaFilter && visaGroup(d.visa)!==visaFilter) return false;
+        return true;
+      });
+      resultCount.textContent=`${filtered.length} 个目的地`;
+      const active=[];
+      if(country) active.push(country);
+      if(range) active.push(range.replace('-', '–'));
+      if(visaFilter) active.push(visaFilter==='需提前'?'需提前办签':visaFilter);
+      if(query) active.push(`“${query}”`);
+      filterSummary.textContent=active.length?`· ${active.join(' · ')}`:'';
+      rows.innerHTML=filtered.length?filtered.map(row).join(''):'<div class="empty">没有找到匹配的目的地。试试换一个关键词或清除筛选。</div>';
+    }
+
+    const lightbox=document.getElementById('lightbox');
+    const lightboxImage=document.getElementById('lightboxImage');
+    const lightboxCaption=document.getElementById('lightboxCaption');
+    const lightboxClose=document.getElementById('lightboxClose');
+    const lightboxPrev=document.getElementById('lightboxPrev');
+    const lightboxNext=document.getElementById('lightboxNext');
+    let lightboxTrigger=null;
+    let lightboxButtons=[];
+    let lightboxIndex=-1;
+    function showLightboxImage(button){
+      const image=button.querySelector('img');
+      if(!image)return;
+      lightboxTrigger=button;
+      lightboxIndex=lightboxButtons.indexOf(button);
+      lightboxImage.src=image.currentSrc||image.src;
+      lightboxImage.alt=image.alt;
+      const destination=DATA.find(d=>d.rank===Number(button.dataset.rank));
+      lightboxCaption.innerHTML=destination?`<span class="lightbox-rank">#${destination.rank}</span><h3 class="lightbox-name">${escapeHtml(destination.cn)}</h3><p class="lightbox-en">${escapeHtml(destination.en)}</p><p class="lightbox-place">${escapeHtml(destination.loc)} · ${escapeHtml(destination.country)}</p><p class="lightbox-reason"><b>入选理由</b>${escapeHtml(destination.reason)}</p>`:`<h3 class="lightbox-name">${escapeHtml(button.dataset.cn)}</h3>`;
+      lightboxPrev.disabled=lightboxButtons.length<2;
+      lightboxNext.disabled=lightboxButtons.length<2;
+    }
+    function openLightbox(button){
+      lightboxButtons=[...rows.querySelectorAll('.image-button')];
+      showLightboxImage(button);
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');
+      lightboxClose.focus();
+    }
+    function stepLightbox(direction){
+      if(lightboxButtons.length<2)return;
+      lightboxIndex=(lightboxIndex+direction+lightboxButtons.length)%lightboxButtons.length;
+      showLightboxImage(lightboxButtons[lightboxIndex]);
+    }
+    function closeLightbox(){
+      lightbox.setAttribute('aria-hidden','true');
+      lightboxImage.removeAttribute('src');
+      document.body.classList.remove('modal-open');
+      if(lightboxTrigger&&document.body.contains(lightboxTrigger))lightboxTrigger.focus();
+      lightboxTrigger=null;lightboxButtons=[];lightboxIndex=-1;
+    }
+    rows.addEventListener('click',event=>{
+      const button=event.target.closest('.image-button');
+      if(button)openLightbox(button);
+    });
+    lightboxClose.addEventListener('click',closeLightbox);
+    lightboxPrev.addEventListener('click',()=>stepLightbox(-1));
+    lightboxNext.addEventListener('click',()=>stepLightbox(1));
+    lightbox.addEventListener('click',event=>{if(event.target===lightbox)closeLightbox()});
+    document.addEventListener('keydown',event=>{
+      if(lightbox.getAttribute('aria-hidden')!=='false')return;
+      if(event.key==='Escape')closeLightbox();
+      if(event.key==='ArrowLeft')stepLightbox(-1);
+      if(event.key==='ArrowRight')stepLightbox(1);
+    });
+
+    let queued=false;
+    search.addEventListener('input',()=>{
+      if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;render()});
+    });
+    countryFilter.addEventListener('change',render);
+    rankFilter.addEventListener('change',render);
+    document.getElementById('visaFilters').addEventListener('click',e=>{
+      const button=e.target.closest('button[data-visa]');
+      if(!button)return;
+      visaFilter=button.dataset.visa;
+      document.querySelectorAll('#visaFilters .chip').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      render();
+    });
+    resetFilters.addEventListener('click',()=>{
+      search.value='';countryFilter.value='';rankFilter.value='';visaFilter='';
+      document.querySelectorAll('#visaFilters .chip').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===0)));
+      render();search.focus();
+    });
+    render();
+  </script>
+</body>
+</html>
